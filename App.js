@@ -1,8 +1,31 @@
 import { useState } from 'react';
-import { View,StyleSheet, TextInput,StatusBar,TouchableOpacity, Button, Text } from 'react-native';
+import { View,StyleSheet, TextInput,StatusBar,TouchableOpacity, Button, Image,Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+const StartingPage = ({ navigation }) => {
+  return (
+    <View style={styles.container}>
+      <Image source={require('./public/img/Logo.png')} style={styles.logo} />
+      <Text style={styles.the}>THE<Text style={styles.school}> SCHOOL</Text></Text>
+
+      <View style={styles.buttonsContainer}>
+        <TouchableOpacity style={styles.loginButton} >
+          <Text style={styles.buttonText}>Teacher</Text>
+          <Image source={require('./public/icons/teacher.png')} style={styles.logo} />
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('StudentLogin')}>
+          <Text style={styles.buttonText}>Student</Text>
+          <Image source={require('./public/icons/student.png')} style={styles.logo} />
+        </TouchableOpacity>
+      </View>
+
+    </View>
+  );
+};
 
 function HomeScreen({ navigation }) {
     return (
@@ -145,6 +168,7 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
@@ -154,37 +178,47 @@ function App() {
 }
 
 const styles = StyleSheet.create({
-        heading :{
-            fontSize: 30,
-            fontWeight: "bold",
-            textAlign: "center",
-            color: "blue"
-        },
-        text:{
-            fontSize: 20,
-            fontWeight: "bold",
-            textAlign: "center",
-            color: "blue"
-        },
-        container: {
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        },
-        inputBox: {
-          
-          borderRadius: 15,
-          borderWidth: 2,
-          marginVertical: 10,
-          padding: 10,
-        },
-        addButton: {
-          backgroundColor: 'blue',
-          alignItems: 'center',
-          padding: 10,
-          borderRadius: 50,
-        },
+  container:{
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1
+  },
+  logo: {
+    marginBottom: 20,
+  },
+  the: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 50,
+  },
+  school:{
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#58B1F4'
+  },
+  loginButton: {
+    backgroundColor: '#58B1F4',
+    padding: 15,
+    borderRadius: 10,
+    margin: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40%',
+    
+  },
+  buttonsContainer:{
+    flexDirection: 'row',
+
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    marginLeft: 10,
+  }
     })
+
+    
+
 
 export default App;
 
