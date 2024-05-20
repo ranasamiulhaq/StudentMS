@@ -12,7 +12,7 @@ const StartingPage = ({ navigation }) => {
       <Text style={styles.the}>THE<Text style={styles.school}> SCHOOL</Text></Text>
 
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('studentLogin')} >
+        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('teacherLogin')} >
           <Text style={styles.buttonText}>Teacher</Text>
           <Image source={require('./public/icons/teacher.png')} style={styles.logo} />
         </TouchableOpacity>
@@ -32,162 +32,151 @@ function StudentLoginScreen({ navigation }) {
       const [password, setPassword] = useState('');
 
     return (
-      <View style={studentLoginStyles.container}>
-        <Image source={require('./public/img/Logo.png')} style={studentLoginStyles.logo} />
-        <Text style={studentLoginStyles.title}>Student Login</Text>
-        <View style={studentLoginStyles.inputContainer}>
-        <Image source={require('./public/icons/email.png')} style={studentLoginStyles.icon} />
+      <View style={LoginStyles.container}>
+        <Image source={require('./public/img/Logo.png')} style={LoginStyles.logo} />
+        <Text style={LoginStyles.title}>Student Login</Text>
+        <View style={LoginStyles.inputContainer}>
+        <Image source={require('./public/icons/email.png')} style={LoginStyles.icon} />
           <TextInput
-            style={studentLoginStyles.input}
+            style={LoginStyles.input}
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
           />
         </View>
-        <View style={studentLoginStyles.inputContainer}>
-        <Image source={require('./public/icons/password.png')} style={studentLoginStyles.icon} />
+        <View style={LoginStyles.inputContainer}>
+        <Image source={require('./public/icons/password.png')} style={LoginStyles.icon} />
           <TextInput
-            style={studentLoginStyles.input}
+            style={LoginStyles.input}
             placeholder="Password"
             secureTextEntry
             value={password}
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={studentLoginStyles.button} onPress={() => navigation.navigate('StudentDashboard')}>
-          <Text style={studentLoginStyles.buttonText}>Login</Text>
+        <TouchableOpacity style={LoginStyles.button} onPress={() => navigation.navigate('studentDashboard')}>
+          <Text style={LoginStyles.buttonText}>Login</Text>
         </TouchableOpacity>
-        <Text style={studentLoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
-        <Text style={studentLoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
+        <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
+        <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
       </View>
       );
-    }
-
-  function LoginScreen({ navigation }) {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [message, setMessage] = useState('');
-  
-    //
-  
-    const handleLogin = async () => {
-      try {
-        const isUserLogin = await auth().signInWithEmailAndPassword(email, password, );
-        setMessage('');
-        console.log(isUserLogin);
-  
-        navigation.navigate('Home', {email: isUserLogin.user.email, uid: isUserLogin.user.uid,});
-      } 
-      catch (err) {
-        console.log(err);
-  
-        setMessage(err.message);
-      }
     };
-    return(
-    <View style={styles.container}>
-      <StatusBar hidden={true} />
-      <View>
-        <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold'}}>
-          Login
-        </Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Enter Your Email"
-          value={email}
-          onChangeText={value => setEmail(value)}
-        />
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Enter Your Password"
-          value={password}
-          onChangeText={value => setPassword(value)}
-          secureTextEntry={true}
-        />
 
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => handleLogin()}>
-          <Text style={{color: '#fff'}}>Login</Text>
-        </TouchableOpacity>
+function TeacherLoginScreen({ navigation }) {
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
 
-        <Text>{message}</Text>
-
-        <TouchableOpacity
-          style={styles.signup}
-          onPress={() => {
-            navigation.navigate('Signup');
-          }}>
-          <Text style={{color: 'blue'}}>New User Signup ?</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  )
-  }
-  
-  function SignupScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [message, setMessage] = useState('');
-
-  const handleSignup = async () => {
-    try {
-      const isUserCreated = await auth().createUserWithEmailAndPassword(
-        email,
-        password,
-      );
-
-      console.log(isUserCreated);
-    } catch (err) {
-      console.log(err);
-
-      setMessage(err.message);
-    }
-  };
     return (
-      
-      <View style={styles.container}>
-      <StatusBar hidden={true} />
-      <View>
-        <Text style={{textAlign: 'center', fontSize: 20, fontWeight: 'bold'}}>
-          Metahub
-        </Text>
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Enter Your Email"
-          value={email}
-          onChangeText={value => setEmail(value)}
-        />
-        <TextInput
-          style={styles.inputBox}
-          placeholder="Enter Your Password"
-          value={password}
-          onChangeText={value => setPassword(value)}
-          secureTextEntry={true}
-        />
-
-        <TouchableOpacity
-          style={styles.addButton}
-          onPress={() => handleSignup()}>
-          <Text style={{color: '#fff'}}>Signup</Text>
+      <View style={LoginStyles.container}>
+        <Image source={require('./public/img/Logo.png')} style={LoginStyles.logo} />
+        <Text style={LoginStyles.title}>Teacher Login</Text>
+        <View style={LoginStyles.inputContainer}>
+        <Image source={require('./public/icons/email.png')} style={LoginStyles.icon} />
+          <TextInput
+            style={LoginStyles.input}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
+        <View style={LoginStyles.inputContainer}>
+        <Image source={require('./public/icons/password.png')} style={LoginStyles.icon} />
+          <TextInput
+            style={LoginStyles.input}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
+        <TouchableOpacity style={LoginStyles.button} onPress={() => navigation.navigate('teacherDashboard')}>
+          <Text style={LoginStyles.buttonText}>Login</Text>
         </TouchableOpacity>
-
-        <Text>{message}</Text>
+        <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
+        <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
       </View>
-    </View>
+      );
+  };
+
+  const TeacherDashboard = () => {
+    return (
+      <View style={TeacherDashboardStyles.container}>
+        <View style={TeacherDashboardStyles.profileContainer}>
+          <Text style={TeacherDashboardStyles.welcomeText}>Welcome !</Text>
+          <Text style={TeacherDashboardStyles.nameText}>Teacher Name</Text>
+          <Text style={TeacherDashboardStyles.detailText}>Designation</Text>
+          <Text style={TeacherDashboardStyles.detailText}>Class</Text>
+        </View>
+        <View style={TeacherDashboardStyles.marksContainer}>
+          <Text style={TeacherDashboardStyles.marksTitle}>Marks</Text>
+          <View style={TeacherDashboardStyles.buttonsColumn}>
+            <TouchableOpacity style={TeacherDashboardStyles.marksButton}>
+              {/* <Icon name="book" size={24} color="#fff" /> */}
+              <Text style={TeacherDashboardStyles.buttonText}>First Term</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={TeacherDashboardStyles.marksButton}>
+              {/* <Icon name="book" size={24} color="#fff" /> */}
+              <Text style={TeacherDashboardStyles.buttonText}>Mid Term</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={TeacherDashboardStyles.marksButton}>
+              {/* <Icon name="book" size={24} color="#fff" /> */}
+              <Text style={TeacherDashboardStyles.buttonText}>Final Term</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
     );
-  }
+  };
+  
+
+  const StudentDashboard = () => {
+    return (
+      <View style={Dashboardstyles.container}>
+        <View style={Dashboardstyles.profileContainer}>
+          <Text style={Dashboardstyles.welcomeText}>Welcome !</Text>
+          <Text style={Dashboardstyles.nameText}>Student Name</Text>
+          <Text style={Dashboardstyles.detailText}>Reg Number</Text>
+          <Text style={Dashboardstyles.detailText}>Class</Text>
+        </View>
+        <View style={Dashboardstyles.dashboardContainer}>
+          <Text style={Dashboardstyles.dashboardTitle}>Dashboard</Text>
+          <View style={Dashboardstyles.buttonsRow}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+              {/* <Icon name="book" size={24} color="#fff" /> */}
+              <Text style={Dashboardstyles.buttonText}>Marks</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+              {/* <Icon name="money" size={24} color="#fff" /> */}
+              <Text style={Dashboardstyles.buttonText}>Fees</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={Dashboardstyles.buttonsRow}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+              {/* <Icon name="calendar" size={24} color="#fff" /> */}
+              <Text style={Dashboardstyles.buttonText}>Time Table</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+              {/* <Icon name="file-text" size={24} color="#fff" /> */}
+              <Text style={Dashboardstyles.buttonText}>Syllabus</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    );
+  };
+
 
 const Stack = createNativeStackNavigator();
-
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
         <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLoginScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
+        <Stack.Screen options={{headerShown: false}} name="teacherLogin" component={TeacherLoginScreen} />
+        <Stack.Screen options={{headerShown: false}} name="studentDashboard" component={StudentDashboard} />
+        <Stack.Screen options={{headerShown: false}} name="teacherDashboard" component={TeacherDashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -234,7 +223,7 @@ const styles = StyleSheet.create({
     })
 
     
-const studentLoginStyles = StyleSheet.create({
+const LoginStyles = StyleSheet.create({
       container: {
         flex: 1,
         alignItems: 'center',
@@ -285,6 +274,115 @@ const studentLoginStyles = StyleSheet.create({
       },
     });
     
+    const Dashboardstyles = StyleSheet.create({
+      container: {
+        flex: 1,
+        backgroundColor: '#E8F4FF',
+      },
+      profileContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 20,
+        backgroundColor: '#58B1F4',
+        margin: 20,
+        borderRadius: 10,
+      },
+      welcomeText: {
+        color: '#fff',
+        fontSize: 18,
+      },
+      nameText: {
+        color: '#fff',
+        fontSize: 22,
+        fontWeight: 'bold',
+      },
+      detailText: {
+        color: '#fff',
+        fontSize: 16,
+      },
+      dashboardContainer: {
+        flex: 1,
+        padding: 20,
+      },
+      dashboardTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+      },
+      buttonsRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+      },
+      dashboardButton: {
+        backgroundColor: '#58B1F4',
+        padding: 20,
+        borderRadius: 10,
+        width: '45%',
+        alignItems: 'center',
+        flexDirection: 'row',
+      },
+      buttonText: {
+        color: '#fff',
+        fontSize: 18,
+        marginLeft: 10,
+      },
+    });
+
+    
+const TeacherDashboardStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#E8F4FF',
+  },
+  profileContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: '#58B1F4',
+    margin: 20,
+    borderRadius: 10,
+  },
+  welcomeText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+  nameText: {
+    color: '#fff',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  detailText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  marksContainer: {
+    flex: 1,
+    padding: 20,
+  },
+  marksTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  buttonsColumn: {
+    alignItems: 'center',
+  },
+  marksButton: {
+    backgroundColor: '#58B1F4',
+    padding: 20,
+    borderRadius: 10,
+    width: '80%',
+    alignItems: 'center',
+    marginBottom: 20,
+    flexDirection: 'row',
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+    marginLeft: 10,
+  },
+});
 
 export default App;
 
