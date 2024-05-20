@@ -3,7 +3,7 @@ import { View,StyleSheet, TextInput,StatusBar,TouchableOpacity, Button, Image,Te
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import {LinearGradient} from 'react-native-linear-gradient';
 
 const StartingPage = ({ navigation }) => {
   return (
@@ -12,12 +12,12 @@ const StartingPage = ({ navigation }) => {
       <Text style={styles.the}>THE<Text style={styles.school}> SCHOOL</Text></Text>
 
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity style={styles.loginButton} >
+        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('studentLogin')} >
           <Text style={styles.buttonText}>Teacher</Text>
           <Image source={require('./public/icons/teacher.png')} style={styles.logo} />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('StudentLogin')}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('studentLogin')}>
           <Text style={styles.buttonText}>Student</Text>
           <Image source={require('./public/icons/student.png')} style={styles.logo} />
         </TouchableOpacity>
@@ -27,25 +27,41 @@ const StartingPage = ({ navigation }) => {
   );
 };
 
-function HomeScreen({ navigation }) {
+function StudentLoginScreen({ navigation }) {
+      const [email, setEmail] = useState('');
+      const [password, setPassword] = useState('');
+
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Wecome to the Home Page</Text>
-        <Text>LOGIN / SIGNUP ?</Text>
-
-        <Button
-          title="Login"
-          onPress={() => navigation.navigate('Login')}
-        />
-
-        <Button
-          title="SignUp"
-          onPress={() => navigation.navigate('Signup')}
-        />
-
+      <View style={studentLoginStyles.container}>
+        <Image source={require('./public/img/Logo.png')} style={studentLoginStyles.logo} />
+        <Text style={studentLoginStyles.title}>Student Login</Text>
+        <View style={studentLoginStyles.inputContainer}>
+        <Image source={require('./public/icons/email.png')} style={studentLoginStyles.icon} />
+          <TextInput
+            style={studentLoginStyles.input}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+          />
+        </View>
+        <View style={studentLoginStyles.inputContainer}>
+        <Image source={require('./public/icons/password.png')} style={studentLoginStyles.icon} />
+          <TextInput
+            style={studentLoginStyles.input}
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={setPassword}
+          />
+        </View>
+        <TouchableOpacity style={studentLoginStyles.button} onPress={() => navigation.navigate('StudentDashboard')}>
+          <Text style={studentLoginStyles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <Text style={studentLoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
+        <Text style={studentLoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
       </View>
-    );
-  }
+      );
+    }
 
   function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('');
@@ -169,7 +185,7 @@ function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
-        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLoginScreen} />
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Signup" component={SignupScreen} />
       </Stack.Navigator>
@@ -218,7 +234,57 @@ const styles = StyleSheet.create({
     })
 
     
-
+const studentLoginStyles = StyleSheet.create({
+      container: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#E8F4FF',
+      },
+      logo: {
+        width: 100,
+        height: 100,
+        marginBottom: 20,
+      },
+      title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 50,
+      },
+      inputContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '80%',
+        padding: 15,
+        borderColor: '#ccc',
+        borderWidth: 1,
+        borderRadius: 10,
+        marginBottom: 20,
+      },
+      icon: {
+        marginRight: 10,
+      },
+      input: {
+        flex: 1,
+      },
+      button: {
+        backgroundColor: '#58B1F4',
+        padding: 15,
+        borderRadius: 10,
+        width: '80%',
+        alignItems: 'center',
+      },
+      buttonText: {
+        color: '#fff',
+        fontSize: 18,
+      },
+      link: {
+        color: '#58B1F4',
+        marginTop: 15,
+        fontSize: 16,
+      },
+    });
+    
 
 export default App;
 
