@@ -9,7 +9,7 @@ const StartingPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={require('./public/img/Logo.png')} style={styles.logo} />
-      <Text style={styles.the}>THE<Text style={styles.school}> SCHOOL</Text></Text>
+      <Text style={styles.the}>THE<Text style={styles.school}> SCHOOL Zain</Text></Text>
 
       <View style={styles.buttonsContainer}>
         <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('teacherLogin')} >
