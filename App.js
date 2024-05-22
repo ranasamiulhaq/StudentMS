@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { View,StyleSheet, TextInput,StatusBar,TouchableOpacity, Button, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
+// import UploadDataComponent from './utils/UploadDataComponent';
 import auth from '@react-native-firebase/auth';
 
 function HomeScreen({ navigation }) {
@@ -142,7 +143,9 @@ function HomeScreen({ navigation }) {
 const Stack = createNativeStackNavigator();
 
 function App() {
-  return (
+
+  // <UploadDataComponent />
+  return (    
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
