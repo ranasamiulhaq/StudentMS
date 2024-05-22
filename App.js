@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
 // import UploadDataComponent from './utils/UploadDataComponent';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import {LinearGradient} from 'react-native-linear-gradient';
 
 const StartingPage = ({ navigation }) => {
@@ -32,6 +33,33 @@ function StudentLoginScreen({ navigation }) {
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
 
+      const verifyLogin = ()=> auth().signInWithEmailAndPassword(email, password).then(() => {
+        const uEmail = auth().currentUser.email;
+        console.log(uEmail);
+        firestore().collection("Users").doc(uEmail).get()
+            .then((documentSnapshot) => {
+                if (documentSnapshot.exists) {
+                    const userRole = documentSnapshot.data().role;
+                    if (userRole === "student") {
+                        navigation.navigate('studentDashboard');
+                    }
+                    else {
+                      alert("No Such Student Exist");
+                    
+                  }
+                } else {
+                    alert("No Such Student Exist");
+                }
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    })
+    .catch((error) => {
+        alert(error.message);
+    });
+
+
     return (
       <View style={LoginStyles.container}>
         <Image source={require('./public/img/Logo.png')} style={LoginStyles.logo} />
@@ -55,7 +83,7 @@ function StudentLoginScreen({ navigation }) {
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={LoginStyles.button} onPress={() => navigation.navigate('studentDashboard')}>
+        <TouchableOpacity style={LoginStyles.button} onPress={()=>verifyLogin()}>
           <Text style={LoginStyles.buttonText}>Login</Text>
         </TouchableOpacity>
         <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
@@ -67,6 +95,31 @@ function StudentLoginScreen({ navigation }) {
 function TeacherLoginScreen({ navigation }) {
       const [email, setEmail] = useState('');
       const [password, setPassword] = useState('');
+      const verifyLogin = ()=> auth().signInWithEmailAndPassword(email, password).then(() => {
+        const uEmail = auth().currentUser.email;
+        console.log(uEmail);
+        firestore().collection("Users").doc(uEmail).get()
+            .then((documentSnapshot) => {
+                if (documentSnapshot.exists) {
+                    const userRole = documentSnapshot.data().role;
+                    if (userRole === "teacher") {
+                        navigation.navigate('studentDashboard');
+                    }
+                    else {
+                      alert("No Such Teacher Exist");
+                    
+                  }
+                } else {
+                    alert("No Such Teacher Exist");
+                }
+            })
+            .catch((error) => {
+                alert(error.message);
+            });
+    })
+    .catch((error) => {
+        alert(error.message);
+    });
 
     return (
       <View style={LoginStyles.container}>
@@ -91,7 +144,7 @@ function TeacherLoginScreen({ navigation }) {
             onChangeText={setPassword}
           />
         </View>
-        <TouchableOpacity style={LoginStyles.button} onPress={() => navigation.navigate('teacherDashboard')}>
+        <TouchableOpacity style={LoginStyles.button} onPress={()=>verifyLogin()}>
           <Text style={LoginStyles.buttonText}>Login</Text>
         </TouchableOpacity>
         <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
