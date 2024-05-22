@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { View,StyleSheet, TextInput,StatusBar,SafeView,TouchableOpacity, Alert,Button, Image,Text ,ScrollView} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
+<<<<<<< HEAD
+=======
+import FeeUsersScreen from './components/FeeUsersScreen';
+import FeeScreen from './components/FeeScreen';
+// import UploadDataComponent from './utils/UploadDataComponent';
+>>>>>>> 340117f1116d352e45d82df8761f2f774bc57793
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 
@@ -43,6 +49,7 @@ function App() {
   return (    
     <NavigationContainer>
       <Stack.Navigator>
+      
         <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
 
         <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLogin} />
@@ -50,10 +57,15 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="adminLogin" component={AdminLogin} />
         <Stack.Screen options={{headerShown: false}} name="studentDashboard" component={StudentDashboard} />
         <Stack.Screen options={{headerShown: false}} name="teacherDashboard" component={TeacherDashboard} />
+<<<<<<< HEAD
         <Stack.Screen options={{headerShown: false}} name="curdStudents" component={CurdStudents} />
         <Stack.Screen options={{headerShown: false}} name="addStudents" component={AddStudent} />
         <Stack.Screen options={{headerShown: false}} name="adminDashboard" component={AdminDashboard} />
 
+=======
+        <Stack.Screen options={{headerShown: false}} name="FeeUsersScreen" component={FeeUsersScreen} />
+        <Stack.Screen options={{headerShown:false}}  name="FeeScreen" component={FeeScreen}/>
+>>>>>>> 340117f1116d352e45d82df8761f2f774bc57793
       </Stack.Navigator>
     </NavigationContainer>
   );
