@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { View,StyleSheet, TextInput,StatusBar,TouchableOpacity, Button, Image,Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
+import FeeUsersScreen from './components/FeeUsersScreen';
+import FeeScreen from './components/FeeScreen';
 // import UploadDataComponent from './utils/UploadDataComponent';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
@@ -228,11 +230,14 @@ function App() {
   return (    
     <NavigationContainer>
       <Stack.Navigator>
+      
         <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
         <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLoginScreen} />
         <Stack.Screen options={{headerShown: false}} name="teacherLogin" component={TeacherLoginScreen} />
         <Stack.Screen options={{headerShown: false}} name="studentDashboard" component={StudentDashboard} />
         <Stack.Screen options={{headerShown: false}} name="teacherDashboard" component={TeacherDashboard} />
+        <Stack.Screen options={{headerShown: false}} name="FeeUsersScreen" component={FeeUsersScreen} />
+        <Stack.Screen options={{headerShown:false}}  name="FeeScreen" component={FeeScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
