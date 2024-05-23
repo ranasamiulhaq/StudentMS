@@ -5,7 +5,8 @@ import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import CurdStudent from './CrudStudent';
-
+import FeeScreen from './FeeScreen';
+import FeeUsersScreen from './FeeUsersScreen';
 function AdminDashboard({navigation}) {
     return (
       <View style={Dashboardstyles.container}>
@@ -17,7 +18,7 @@ function AdminDashboard({navigation}) {
               {/* <Icon name="book" size={24} color="#fff" /> */}
               <Text style={Dashboardstyles.buttonText}>Students</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={navigation.navigate('FeeUsersScreen')}>
               {/* <Icon name="money" size={24} color="#fff" /> */}
               <Text style={Dashboardstyles.buttonText}>Fees</Text>
             </TouchableOpacity>
