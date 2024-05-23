@@ -11,46 +11,46 @@ function StudentLogin({ navigation }) {
 
     const verifyLogin = async () => {
       try {
-          // await auth().signInWithEmailAndPassword(email +'@gmail.com', password);
+          await auth().signInWithEmailAndPassword(email +'@gmail.com', password);
   
-          // const uEmail = auth().currentUser.email;
-          // console.log(uEmail);
-          // const userQuerySnapshot = await firestore().collection("Users")
-          //     .where("email", "==", uEmail)
-          //     .get();
+          const uEmail = auth().currentUser.email;
+          console.log(uEmail);
+          const userQuerySnapshot = await firestore().collection("Users")
+              .where("email", "==", uEmail)
+              .get();
   
-          // if (!userQuerySnapshot.empty) {
-          //     const userDoc = userQuerySnapshot.docs[0];
-          //     const userRole = userDoc.data().role;
-  
-          //     if (userRole === "student") {
-          //         navigation.navigate('studentDashboard');
-          //     } else {
-          //         alert("No Such Student Exists");
-          //     }
-          // } else {
-          //     alert("No Such Student Exists");
-          // }
-
-          const userQuerySnapshot = await firestore().collection("Students")
-          .where("registrationNumber", "==", email)
-          .get();
-
           if (!userQuerySnapshot.empty) {
-            const userDoc = userQuerySnapshot.docs[0];
-            const userData = userDoc.data();
-            const hashedPassword = userData.password;
-            const isPasswordValid = await verifyPassword(plainPassword, hashedPassword);
-            if (isPasswordValid) {
-                    navigation.navigate('studentDashboard');
-              } 
-            else {
-                    alert("No Such Student Exists");
-                  }
-            }
-              else {
-                  alert("Invalid Registraion Number");
+              const userDoc = userQuerySnapshot.docs[0];
+              const userRole = userDoc.data().role;
+  
+              if (userRole === "student") {
+                  navigation.navigate('studentDashboard');
+              } else {
+                  alert("No Such Student Exists");
               }
+          } else {
+              alert("No Such Student Exists");
+          }
+
+      //     const userQuerySnapshot = await firestore().collection("Students")
+      //     .where("registrationNumber", "==", email)
+      //     .get();
+
+      //     if (!userQuerySnapshot.empty) {
+      //       const userDoc = userQuerySnapshot.docs[0];
+      //       const userData = userDoc.data();
+      //       const hashedPassword = userData.password;
+      //       const isPasswordValid = await verifyPassword(plainPassword, hashedPassword);
+      //       if (isPasswordValid) {
+      //               navigation.navigate('studentDashboard');
+      //         } 
+      //       else {
+      //               alert("No Such Student Exists");
+      //             }
+      //       }
+      //         else {
+      //             alert("Invalid Registraion Number");
+      //         }
           }
                   
       catch (error) {
