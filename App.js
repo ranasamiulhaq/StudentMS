@@ -14,6 +14,7 @@ import StudentDashboard from './components/Student/StudentDashborad';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import CurdStudents from './components/Admin/CrudStudent';
 import AddStudent from './components/Admin/AddStudent';
+import Marks from './components/Teacher/marks';
 import AdminClassScreen from './components/Admin/AdminClassScreen'
 import crudFee from './components/Admin/crudFee'
 import viewFeeStatusdetail from './components/Admin/viewFeeStatusdetail'
@@ -28,7 +29,8 @@ const StartingPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={require('./public/img/Logo.png')} style={styles.logo} />
-      <Text style={styles.the}>THE<Text style={styles.school}>SCHOOL</Text></Text>
+      <Text style={styles.the}>THE<Text style={styles.school}> SCHOOL</Text></Text>
+      <Text  onPress={() => {navigation.navigate('adminLogin')}}>Admin Login</Text>
       <View style={styles.buttonsContainer}>
         <LinearGradient colors={['#79bae6', '#468ec5']} style={styles.loginButton}>
           <TouchableOpacity onPress={() => navigation.navigate('teacherLogin')}>
@@ -101,6 +103,8 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="UploadTimeTable" component={UploadTimeTable} /> 
         <Stack.Screen options={{headerShown: false}} name="UploadSyllabus" component={UploadSyllabus} />  
         <Stack.Screen options={{ title: 'Delete Student' }}name="deleteStudents" component={DeleteStudent} />
+        <Stack.Screen options={{headerShown: false}} name="Marks" component={Marks} />
+
         <Stack.Screen options={{ title: 'View Student' }} name="viewStudents" component={ViewStudent} />
       
       </Stack.Navigator>

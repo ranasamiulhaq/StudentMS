@@ -1,31 +1,71 @@
-import { useState } from 'react';
-import { View,StyleSheet, TextInput,StatusBar,SafeView,TouchableOpacity, Alert,Button, Image,Text ,ScrollView} from 'react-native';
+// import { useState } from 'react';
+import { View,StyleSheet, TextInput,StatusBar,SafeView,TouchableOpacity, Alert,Button, Image,Text ,ScrollView, SectionListComponent} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
-import auth from '@react-native-firebase/auth';
+import React, { useState, useEffect } from 'react';
+// import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { set } from 'firebase/database';
+import marks from './marks';
+import { useNavigation } from '@react-navigation/native';
 
-const TeacherDashboard = () => {
+const TeacherDashboard = ({route}) => {
+  const { email } = route.params;
+  const [teacherName, setTeacherName] = useState('');
+  const [className, setClassName] = useState('');
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    const fetchTeacherName = async () => {
+      try {
+        const teacherSnapshot = await firestore()
+          .collection('Teachers')
+          .where('email', '==', email)
+          .get();
+
+        if (!teacherSnapshot.empty) {
+          const teacherData = teacherSnapshot.docs[0].data();
+          const name = teacherData.name; 
+          const className = teacherData.assignedClass;
+          console.log(name);
+          console.log(className);
+          setTeacherName(name);
+          setClassName(className);
+        } else {
+          setTeacherName('Teacher not found');
+        }
+      } catch (error) {
+        console.error('Error fetching teacher:', error);
+        setTeacherName('Error fetching teacher');
+      }
+    };
+
+    fetchTeacherName();
+  }, [email]);
+
+  const marksPortal = (term) => {
+    console.log('Marks Portal', term);
+    navigation.navigate('Marks', { term: term, classId: className});
+  }
     return (
       <View style={TeacherDashboardStyles.container}>
         <View style={TeacherDashboardStyles.profileContainer}>
           <Text style={TeacherDashboardStyles.welcomeText}>Welcome !</Text>
-          <Text style={TeacherDashboardStyles.nameText}>Teacher Name</Text>
-          <Text style={TeacherDashboardStyles.detailText}>Designation</Text>
-          <Text style={TeacherDashboardStyles.detailText}>Class</Text>
+          <Text style={TeacherDashboardStyles.nameText}>{teacherName}</Text>
+          <Text style={TeacherDashboardStyles.detailText}>{className}</Text>
         </View>
         <View style={TeacherDashboardStyles.marksContainer}>
           <Text style={TeacherDashboardStyles.marksTitle}>Marks</Text>
           <View style={TeacherDashboardStyles.buttonsColumn}>
-            <TouchableOpacity style={TeacherDashboardStyles.marksButton}>
+            <TouchableOpacity onPress={() => marksPortal("First")} style={TeacherDashboardStyles.marksButton}>
               {/* <Icon name="book" size={24} color="#fff" /> */}
-              <Text style={TeacherDashboardStyles.buttonText}>First Term</Text>
+              <Text style={TeacherDashboardStyles.buttonText } >First Term</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={TeacherDashboardStyles.marksButton}>
+            <TouchableOpacity onPress={() => marksPortal("Mid")} style={TeacherDashboardStyles.marksButton}>
               {/* <Icon name="book" size={24} color="#fff" /> */}
               <Text style={TeacherDashboardStyles.buttonText}>Mid Term</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={TeacherDashboardStyles.marksButton}>
+            <TouchableOpacity onPress={() => marksPortal("Final")} style={TeacherDashboardStyles.marksButton}>
               {/* <Icon name="book" size={24} color="#fff" /> */}
               <Text style={TeacherDashboardStyles.buttonText}>Final Term</Text>
             </TouchableOpacity>
@@ -66,6 +106,7 @@ const TeacherDashboard = () => {
       padding: 20,
     },
     marksTitle: {
+      color: '#58B1F4',
       fontSize: 24,
       fontWeight: 'bold',
       marginBottom: 20,
