@@ -16,7 +16,7 @@ const CurdStudent = ({navigation}) => {
               {/* <Icon name="book" size={24} color="#fff" /> */}
               <Text style={Dashboardstyles.buttonText}>Add Student</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('deleteStudents')}}>
               {/* <Icon name="money" size={24} color="#fff" /> */}
               <Text style={Dashboardstyles.buttonText}>Delete Student</Text>
             </TouchableOpacity>
