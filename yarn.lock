@@ -2616,6 +2616,11 @@
   resolved "https://registry.npmjs.org/@react-native-firebase/firestore/-/firestore-20.0.0.tgz"
   integrity sha512-fn/0nYQPrq+Las8r4SkxKZ1fLcoAIpFqRA/ARIPW0F8C7IMpI0LugW6kpd+P6aVyT4I1mzLS+wr8n+02bifzVw==
 
+"@react-native-picker/picker@^2.7.6":
+  version "2.7.6"
+  resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-2.7.6.tgz"
+  integrity sha512-Cs3PxRmE2vu6TofM9vt9TV8ZYFOtEPSupNxwoorH9lpkKM9HGG8QwK2i29KOEoODpUbtudKHUTtqhMZSuX9pgA==
+
 "@react-native/assets-registry@~0.74.83", "@react-native/assets-registry@0.74.83":
   version "0.74.83"
   resolved "https://registry.npmjs.org/@react-native/assets-registry/-/assets-registry-0.74.83.tgz"
@@ -7796,6 +7801,11 @@ path-type@^4.0.0:
   resolved "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
+picker@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.npmjs.org/picker/-/picker-0.1.4.tgz"
+  integrity sha512-M9fNs3FYg3buWWGrxtZWBngshiD4cQWqvnO1YIPet/P3VaSrcEkg9I9SwiNXpLhPVkP5b+eLoaWc3DLrRL/VUA==
+
 picocolors@^1.0.0, picocolors@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/picocolors/-/picocolors-1.0.1.tgz"
@@ -8104,6 +8114,11 @@ react-native-elements@^3.4.3:
     opencollective-postinstall "^2.0.3"
     react-native-ratings "8.0.4"
     react-native-size-matters "^0.3.1"
+
+react-native-dropdown-picker@^5.4.6:
+  version "5.4.6"
+  resolved "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-5.4.6.tgz"
+  integrity sha512-T1XBHbE++M6aRU3wFYw3MvcOuabhWZ29RK/Ivdls2r1ZkZ62iEBZknLUPeVLMX3x6iUxj4Zgr3X2DGlEGXeHsA==
 
 "react-native-gesture-handler@>= 1.5.0":
   version "2.16.2"
