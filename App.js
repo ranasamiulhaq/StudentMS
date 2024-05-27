@@ -30,7 +30,7 @@ const StartingPage = ({ navigation }) => {
     <View style={styles.container}>
       <Image source={require('./public/img/Logo.png')} style={styles.logo} />
       <Text style={styles.the}>THE<Text style={styles.school}> SCHOOL</Text></Text>
-      <Text  onPress={() => {navigation.navigate('adminLogin')}}>Admin Login</Text>
+      
       <View style={styles.buttonsContainer}>
         <LinearGradient colors={['#79bae6', '#468ec5']} style={styles.loginButton}>
           <TouchableOpacity onPress={() => navigation.navigate('teacherLogin')}>
@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonsContainer: {
+    marginTop: 80,
     flexDirection: 'row',
   },
   AdminButton: {
