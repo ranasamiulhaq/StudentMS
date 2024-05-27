@@ -1,6 +1,7 @@
 import React, { useState ,useEffect} from 'react';
 import { View, Text, TextInput, Button, Switch, StyleSheet, ScrollView } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import { Alert } from 'react-native';
 
 const FeeScreen = ({route}) => {
   const { student } = route.params;
@@ -29,6 +30,7 @@ const FeeScreen = ({route}) => {
         registrationNumber
       });
       console.log('Record added successfully!');
+      Alert.alert("Successfully updated", "Record has been added")
       // Reset the form after saving
       setStudentName('');
       setAmountDue('');
