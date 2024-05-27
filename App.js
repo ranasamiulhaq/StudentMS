@@ -24,6 +24,8 @@ import UploadSyllabus from './components/Admin/UploadSyllabus';
 import Marks from './components/Teacher/marks';
 import DeleteStudent from './components/Admin/deleteStudent';
 import ViewStudent from './components/Admin/viewStudent';
+import StudentMarks from './components/Student/StudentMarks';
+import StudentFeeStatus from './components/Student/StudentFeeStatus';
 
 const StartingPage = ({ navigation }) => {
   return (
@@ -105,6 +107,8 @@ function App() {
         <Stack.Screen options={{ title: 'Delete Student' }}name="deleteStudents" component={DeleteStudent} />
         <Stack.Screen options={{ title: 'View Student' }} name="viewStudents" component={ViewStudent} />
         <Stack.Screen options={{title: 'Marks'}} name="Marks" component={Marks} />
+        <Stack.Screen options={{title: 'StudentMarks'}} name="StudentMarks" component={StudentMarks} />
+        <Stack.Screen options={{title:'StudentFeeStatus'}} name="StudentFeeStatus" component={StudentFeeStatus} />
       </Stack.Navigator>
     </NavigationContainer>
   );
