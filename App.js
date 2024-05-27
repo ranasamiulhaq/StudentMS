@@ -93,13 +93,13 @@ function App() {
         <Stack.Screen options={{ title: 'Add Student' }} name="addStudents" component={AddStudent} />
         <Stack.Screen options={{headerShown: false}} name="FeeUsersScreen" component={FeeUsersScreen} />
         <Stack.Screen options={{headerShown: false}} name="FeeScreen" component={FeeScreen} />
-        <Stack.Screen options={{headerShown: false}} name="AdminClassScreen" component={AdminClassScreen} />     
+        <Stack.Screen options={{title: 'Generate Fee'}} name="AdminClassScreen" component={AdminClassScreen} />     
         <Stack.Screen options={{headerShown: false}} name="crudFee" component={crudFee} /> 
         <Stack.Screen options={{headerShown: false}} name="viewFeeStatusdetail" component={viewFeeStatusdetail} /> 
-        <Stack.Screen options={{headerShown: false}} name="deletefeeStatus" component={DeleteFeeStatus} /> 
+        <Stack.Screen options={{title: 'Fee Status'}} name="deletefeeStatus" component={DeleteFeeStatus} /> 
         <Stack.Screen options={{headerShown: false}} name="EditFee" component={EditFee} />  
-        <Stack.Screen options={{headerShown: false}} name="UploadTimeTable" component={UploadTimeTable} /> 
-        <Stack.Screen options={{headerShown: false}} name="UploadSyllabus" component={UploadSyllabus} />  
+        <Stack.Screen options={{title: 'Upload Time Table'}} name="UploadTimeTable" component={UploadTimeTable} /> 
+        <Stack.Screen options={{title: 'Upload Syllabus'}} name="UploadSyllabus" component={UploadSyllabus} />  
         <Stack.Screen options={{ title: 'Delete Student' }}name="deleteStudents" component={DeleteStudent} />
         <Stack.Screen options={{ title: 'View Student' }} name="viewStudents" component={ViewStudent} />
       

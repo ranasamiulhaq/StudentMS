@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { View, Image, Text, StyleSheet, ActivityIndicator, Alert, TouchableOpacity, ProgressBarAndroid, TextInput } from 'react-native';
+import { View, Image, Text, StyleSheet, ActivityIndicator, Alert, TouchableOpacity, ProgressBarAndroid } from 'react-native';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { Picker } from '@react-native-picker/picker';
 import storage from '@react-native-firebase/storage';
 
 const UploadSyllabus = () => {
@@ -64,23 +65,31 @@ const UploadSyllabus = () => {
     }
   };
 
-  const handleClassNameChange = (text) => {
-    setClassName(text);
-    setClassNameSet(text.trim().length > 0);
+  const handleClassNameChange = (value) => {
+    setClassName(value);
+    setClassNameSet(value.trim().length > 0);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>University Syllabus Upload</Text>
-      </View>
       <Text style={styles.title}>Upload Class Syllabus</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter Class Name"
-        value={className}
-        onChangeText={handleClassNameChange}
-      />
+      <Picker
+        selectedValue={className}
+        onValueChange={handleClassNameChange}
+        style={styles.picker}
+      >
+        <Picker.Item label="Select Class" value="" />
+        <Picker.Item label="Nursery" value="nursery" />
+        <Picker.Item label="Prep" value="prep" />
+        <Picker.Item label="Class 1" value="class1" />
+        <Picker.Item label="Class 2" value="class2" />
+        <Picker.Item label="Class 3" value="class3" />
+        <Picker.Item label="Class 4" value="class4" />
+        <Picker.Item label="Class 5" value="class5" />
+        <Picker.Item label="Class 6" value="class6" />
+        <Picker.Item label="Class 7" value="class7" />
+        <Picker.Item label="Class 8" value="class8" />
+      </Picker>
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={[styles.button, !classNameSet && styles.buttonDisabled]}
@@ -96,7 +105,6 @@ const UploadSyllabus = () => {
         >
           <Text style={styles.buttonText}>Upload Image</Text>
         </TouchableOpacity>
-
       </View>
       {uploading ? (
         <View style={styles.progressContainer}>
@@ -122,14 +130,12 @@ const UploadSyllabus = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#f5f5f5',
     padding: 20,
   },
   header: {
     width: '100%',
-    backgroundColor: '#6200ee',
+    backgroundColor: '#58B1F4',
     paddingVertical: 15,
     marginBottom: 30,
     alignItems: 'center',
@@ -143,18 +149,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
-    color: '#333',
+    color: '#58B1F4',
     textAlign: 'center',
   },
-  input: {
+  picker: {
     width: '100%',
-    padding: 10,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
     marginBottom: 20,
-    fontSize: 16,
-    backgroundColor: '#fff',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#6200ee',
+    backgroundColor: '#58B1F4',
     padding: 12,
     borderRadius: 25,
     marginHorizontal: 10,
@@ -177,10 +177,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   uploadButton: {
-    backgroundColor: '#00c853',
-  },
-  removeButton: {
-    backgroundColor: '#d32f2f',
+    backgroundColor: '#58B1F4',
   },
   buttonText: {
     color: '#fff',

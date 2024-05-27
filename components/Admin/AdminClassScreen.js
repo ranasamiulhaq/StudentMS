@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
-import FeeUsersScreen from './FeeUsersScreen';
 
 const AdminClassScreen = () => {
   const navigation = useNavigation();

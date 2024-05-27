@@ -63,10 +63,8 @@ const UploadTimeTable = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>University Timetable</Text>
-      </View>
-      <Text style={styles.title}>Upload Your Timetable</Text>
+   
+      <Text style={styles.title}>Upload Yearly Timetable</Text>
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={styles.button} onPress={pickImage}>
           <Text style={styles.buttonText}>Pick an Image</Text>
@@ -101,8 +99,6 @@ const UploadTimeTable = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: '#f5f5f5',
     padding: 20,
   },
@@ -132,7 +128,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: '#6200ee',
+    backgroundColor: '#58B1F4',
     padding: 12,
     borderRadius: 25,
     marginHorizontal: 10,
