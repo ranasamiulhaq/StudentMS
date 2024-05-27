@@ -46,18 +46,26 @@ function Marks({ route }) {
         const studentsRef = await firestore().collection('Students')
           .where('classId', '==', classId)
           .get();
-
+  
         const studentsData = studentsRef.docs.map(doc => doc.data());
         console.log('Students data:', studentsData);
+  
+        // Sort studentsData based on registrationNumber without using localeCompare
+        studentsData.sort((a, b) => {
+          if (a.registrationNumber < b.registrationNumber) return -1;
+          if (a.registrationNumber > b.registrationNumber) return 1;
+          return 0;
+        });
+  
         setStudents(studentsData);
       } catch (error) {
         console.error('Error fetching students:', error);
       }
     };
-
+  
     fetchStudents();
   }, [classId]);
-
+  
   useEffect(() => {
     const fetchMarks = async () => {
       if (!selectedSubject) return;
