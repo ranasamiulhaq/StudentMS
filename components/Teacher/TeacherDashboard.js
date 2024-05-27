@@ -57,15 +57,15 @@ const TeacherDashboard = ({route}) => {
         <View style={TeacherDashboardStyles.marksContainer}>
           <Text style={TeacherDashboardStyles.marksTitle}>Marks</Text>
           <View style={TeacherDashboardStyles.buttonsColumn}>
-            <TouchableOpacity onPress={() => marksPortal("First")} style={TeacherDashboardStyles.marksButton}>
+            <TouchableOpacity onPress={() => marksPortal("first")} style={TeacherDashboardStyles.marksButton}>
               {/* <Icon name="book" size={24} color="#fff" /> */}
               <Text style={TeacherDashboardStyles.buttonText } >First Term</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => marksPortal("Mid")} style={TeacherDashboardStyles.marksButton}>
+            <TouchableOpacity onPress={() => marksPortal("mid")} style={TeacherDashboardStyles.marksButton}>
               {/* <Icon name="book" size={24} color="#fff" /> */}
               <Text style={TeacherDashboardStyles.buttonText}>Mid Term</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => marksPortal("Final")} style={TeacherDashboardStyles.marksButton}>
+            <TouchableOpacity onPress={() => marksPortal("final")} style={TeacherDashboardStyles.marksButton}>
               {/* <Icon name="book" size={24} color="#fff" /> */}
               <Text style={TeacherDashboardStyles.buttonText}>Final Term</Text>
             </TouchableOpacity>
