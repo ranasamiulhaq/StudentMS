@@ -11,7 +11,6 @@ const DeleteFeeStatus = () => {
   const [filteredFees, setFilteredFees] = useState([]);
   const navigation = useNavigation();
 
-  useEffect(() => {
     const fetchFees = async () => {
       try {
         const feeCollection = await firestore().collection('FeeStatus').get();
@@ -29,7 +28,6 @@ const DeleteFeeStatus = () => {
     };
 
     fetchFees();
-  }, []);
 
   const handleSearch = (term) => {
     if (term) {
@@ -47,7 +45,7 @@ const DeleteFeeStatus = () => {
   const handleDelete=async(item)=>{
     try {
         await firestore().collection('FeeStatus').doc(item.id).delete();
-        setFees(prevFees => prevFees.filter(fee => fee.id !== item.id));
+        await fetchFees()
         Alert.alert('Success', 'Fee deleted successfully');
       } catch (error) {
         console.error('Error deleting fee: ', error);
