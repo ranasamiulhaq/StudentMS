@@ -34,7 +34,7 @@ function AdminLogin({ navigation }) {
       } catch (error) {
           Alert.alert(error.message);
       }
-    }
+}
 
   return (
   <View style={LoginStyles.container}>

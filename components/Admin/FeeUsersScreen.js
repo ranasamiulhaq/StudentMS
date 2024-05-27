@@ -5,7 +5,8 @@ import firestore from '@react-native-firebase/firestore';
 import FeeScreen from './FeeScreen';
 
 
-const FeeUsersScreen = () => {
+const FeeUsersScreen = ({route}) => {
+  var admissionClass=route.params.className
   const navigation=useNavigation()
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +14,7 @@ const FeeUsersScreen = () => {
     useEffect(() => {
         const fetchUsers = async () => {
           try {
-            const userCollection = await firestore().collection('Students').get();
+            const userCollection = await firestore().collection('Students').where('admissionClass','==',admissionClass).get();
             const userList = userCollection.docs.map(doc => ({
                 id:doc.id,
               ...doc.data()

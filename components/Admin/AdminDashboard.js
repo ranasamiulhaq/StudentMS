@@ -1,3 +1,13 @@
+import { useState } from 'react';
+import { View,StyleSheet, TextInput,StatusBar,SafeView,TouchableOpacity, Alert,Button, Image,Text ,ScrollView} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator} from '@react-navigation/native-stack';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
+import CurdStudent from './CrudStudent';
+import FeeScreen from './FeeScreen';
+import FeeUsersScreen from './FeeUsersScreen';
+import AdminClassScreen from './AdminClassScreen';
 import { View,StyleSheet, TouchableOpacity, Image,Text } from 'react-native';
 function AdminDashboard({navigation}) {
     return (
@@ -7,6 +17,16 @@ function AdminDashboard({navigation}) {
           <Text style={Dashboardstyles.dashboardTitle}>Admin Panel</Text>
 
           <View style={Dashboardstyles.buttonsRow}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('curdStudents')}}>
+              {/* <Icon name="book" size={24} color="#fff" /> */}
+              <Text style={Dashboardstyles.buttonText}>Students</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{
+              navigation.navigate('crudFee')
+              }}>
+              {/* <Icon name="money" size={24} color="#fff" /> */}
+              <Text style={Dashboardstyles.buttonText}>FeeStatus</Text>
+            </TouchableOpacity>
             <View style={Dashboardstyles.IconContainer}>
                 <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('curdStudents')}}>
                   <Image source={require('../../public/icons/student.png')} style={Dashboardstyles.image} />
@@ -31,6 +51,13 @@ function AdminDashboard({navigation}) {
           </View>
 
           <View style={Dashboardstyles.buttonsRow}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('UploadTimeTable')}}>
+              {/* <Icon name="calendar" size={24} color="#fff" /> */}
+              <Text style={Dashboardstyles.buttonText}>Time Table</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('UploadSyllabus')}}>
+              <Text style={Dashboardstyles.buttonText}>Syllabus</Text>
+            </TouchableOpacity>
             <View style={Dashboardstyles.IconContainer}>
                 <TouchableOpacity style={Dashboardstyles.dashboardButton}>
                   <Image source={require('../../public/icons/class.png')} style={Dashboardstyles.image} />
