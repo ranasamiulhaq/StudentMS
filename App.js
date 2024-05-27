@@ -19,6 +19,8 @@ import crudFee from './components/Admin/crudFee'
 import viewFeeStatusdetail from './components/Admin/viewFeeStatusdetail'
 import DeleteFeeStatus from './components/Admin/DeleteFeeStatus';
 import EditFee from './components/Admin/EditFee';
+import UploadTimeTable from './components/Admin/UploadTimeTable';
+import UploadSyllabus from './components/Admin/UploadSyllabus';
 
 const StartingPage = ({ navigation }) => {
   return (
@@ -65,6 +67,8 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="viewFeeStatusdetail" component={viewFeeStatusdetail} /> 
         <Stack.Screen options={{headerShown: false}} name="deletefeeStatus" component={DeleteFeeStatus} /> 
         <Stack.Screen options={{headerShown: false}} name="EditFee" component={EditFee} />  
+        <Stack.Screen options={{headerShown: false}} name="UploadTimeTable" component={UploadTimeTable} /> 
+        <Stack.Screen options={{headerShown: false}} name="UploadSyllabus" component={UploadSyllabus} />  
       </Stack.Navigator>
     </NavigationContainer>
   );

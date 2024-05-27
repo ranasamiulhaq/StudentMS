@@ -27,11 +27,11 @@ function AdminDashboard({navigation}) {
             </TouchableOpacity>
           </View>
           <View style={Dashboardstyles.buttonsRow}>
-            <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('UploadTimeTable')}}>
               {/* <Icon name="calendar" size={24} color="#fff" /> */}
               <Text style={Dashboardstyles.buttonText}>Time Table</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('UploadSyllabus')}}>
               <Text style={Dashboardstyles.buttonText}>Syllabus</Text>
             </TouchableOpacity>
           </View>
