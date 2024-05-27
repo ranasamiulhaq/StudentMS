@@ -110,9 +110,6 @@
            
 
             <ScrollView contentContainerStyle={crudStyles.container}>
-                <TouchableOpacity onPress={() => {navigation.navigate('curdStudents')}}>
-                    <Text>Back</Text> 
-                </TouchableOpacity>
 
                 <View style={crudStyles.inputGroup}>
                     <Text style={crudStyles.label}>Registration Number:</Text>

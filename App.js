@@ -1,12 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, TextInput, StatusBar, SafeAreaView, TouchableOpacity, Alert, Button, Image, Text, ScrollView, Animated, Easing } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Image, Text, Easing } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import FeeUsersScreen from './components/Admin/FeeUsersScreen';
 import FeeScreen from './components/Admin/FeeScreen';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LinearGradient from 'react-native-linear-gradient'; // Import LinearGradient
 
 import StudentLogin from './components/Student/StudentLogin';
@@ -57,7 +54,7 @@ const StartingPage = ({ navigation }) => {
   );
 };
 
-const Stack = createNativeStackNavigator();
+
 
 const fadeTransition = {
   animation: 'fade',
@@ -80,10 +77,12 @@ const screenOptions = {
   }),
 };
 
+const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen options={{headerShown: false}} name="adminDashboard" component={AdminDashboard} />
         <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
         <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLogin} />
         <Stack.Screen options={{headerShown: false}} name="teacherLogin" component={TeacherLogin} />
@@ -91,8 +90,7 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="studentDashboard" component={StudentDashboard} />
         <Stack.Screen options={{headerShown: false}} name="teacherDashboard" component={TeacherDashboard} />
         <Stack.Screen options={{headerShown: false}} name="curdStudents" component={CurdStudents} />
-        <Stack.Screen options={{headerShown: false}} name="addStudents" component={AddStudent} />
-        <Stack.Screen options={{headerShown: false}} name="adminDashboard" component={AdminDashboard} />
+        <Stack.Screen options={{ title: 'Add Student' }} name="addStudents" component={AddStudent} />
         <Stack.Screen options={{headerShown: false}} name="FeeUsersScreen" component={FeeUsersScreen} />
         <Stack.Screen options={{headerShown: false}} name="FeeScreen" component={FeeScreen} />
         <Stack.Screen options={{headerShown: false}} name="AdminClassScreen" component={AdminClassScreen} />     
@@ -102,21 +100,8 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="EditFee" component={EditFee} />  
         <Stack.Screen options={{headerShown: false}} name="UploadTimeTable" component={UploadTimeTable} /> 
         <Stack.Screen options={{headerShown: false}} name="UploadSyllabus" component={UploadSyllabus} />  
-      <Stack.Navigator screenOptions={screenOptions}>
-        <Stack.Screen name="adminDashboard" component={AdminDashboard} />
-        <Stack.Screen name="Land" component={StartingPage} />
-
-        <Stack.Screen name="teacherDashboard" component={TeacherDashboard} />
-        <Stack.Screen name="teacherLogin" component={TeacherLogin} />
-        
-        <Stack.Screen name="studentLogin" component={StudentLogin} />
-        <Stack.Screen name="studentDashboard" component={StudentDashboard} />
-        
-        <Stack.Screen name="adminLogin" component={AdminLogin} />
-        <Stack.Screen name="curdStudents" component={CurdStudents} />
-        <Stack.Screen name="addStudents" component={AddStudent} />
-        <Stack.Screen name="deleteStudents" component={DeleteStudent} />
-        <Stack.Screen name="viewStudents" component={ViewStudent} />
+        <Stack.Screen options={{ title: 'Delete Student' }}name="deleteStudents" component={DeleteStudent} />
+        <Stack.Screen options={{ title: 'View Student' }} name="viewStudents" component={ViewStudent} />
       
       </Stack.Navigator>
     </NavigationContainer>

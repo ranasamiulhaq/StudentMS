@@ -3,7 +3,7 @@ import { View, StyleSheet, TextInput, TouchableOpacity, Text, ScrollView, Alert 
 import { Picker } from '@react-native-picker/picker';
 import firestore from '@react-native-firebase/firestore';
 
-const ViewStudent = () => {
+const ViewStudent = ({ navigation }) => {
     const [admissionClass, setAdmissionClass] = useState('');
     const [registrationNumber, setRegistrationNumber] = useState('');
     const [studentDetails, setStudentDetails] = useState(null);
@@ -80,9 +80,7 @@ const ViewStudent = () => {
                     <Text style={styles.studentDetailText}>Remarks: {studentDetails.remarks}</Text>
                 </View>
             )}
-            <TouchableOpacity style={styles.backButton} onPress={()=>{navigation.navigate('adminDashboard')}}>
-                  <Text style={styles.backText}>Back to Dashboard </Text>
-            </TouchableOpacity>
+            
         </ScrollView>
     );
 };
