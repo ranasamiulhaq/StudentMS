@@ -74,12 +74,12 @@ const StudentDashboard = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
         <View style={Dashboardstyles.buttonsRow}>
-          <TouchableOpacity style={Dashboardstyles.dashboardButton}>
-            {/* onPress={() => navigation.navigate('Timetable', { imageName: classname + " timetable.jpg" })} */}
+          <TouchableOpacity onPress={() => navigation.navigate('Timetable', { imageName: classname + " timetable.jpg" })} style={Dashboardstyles.dashboardButton}>
+            
             {/* <Icon name="calendar" size={24} color="#fff" /> */}
             <Text style={Dashboardstyles.buttonText}>Time Table</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={Dashboardstyles.dashboardButton}>
+          <TouchableOpacity onPress={() => navigation.navigate('Syllabus', { imageName: classname + " syllabus.jpg" })} style={Dashboardstyles.dashboardButton}>
             {/* <Icon name="file-text" size={24} color="#fff" /> */}
             <Text style={Dashboardstyles.buttonText}>Syllabus</Text>
           </TouchableOpacity>
