@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, FlatList, TextInput, Button, Alert } from 'react-native';
+import { View, StyleSheet, Text, FlatList, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import firestore from '@react-native-firebase/firestore';
 
@@ -144,9 +144,8 @@ function Marks({ route }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>Marks Portal</Text>
       <View style={styles.dropdownContainer}>
-        <Text style={styles.label}>Select Subject:</Text>
+        <Text style={styles.heading}>Select Subject:</Text>
         <DropDownPicker
           open={open}
           value={selectedSubject}
@@ -189,7 +188,10 @@ function Marks({ route }) {
           )}
         />
       </View>
-      <Button title="Update Marks" onPress={updateMarks} />
+      <TouchableOpacity style={styles.updateButton} title="Update Marks" onPress={updateMarks} >
+        <Text style={styles.updateButtonText}>Upload Marks</Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
@@ -198,9 +200,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 50,
   },
   heading: {
+    marginTop: 20,
     color: '#58B1F4',
     fontSize: 20,
     marginBottom: 20,
@@ -251,6 +253,17 @@ const styles = StyleSheet.create({
     color: 'black',
     padding: 10,
     flex: 1,
+  },
+  updateButton:{
+    alignItems: 'center',
+    backgroundColor: '#58B1F4',
+    padding: 10,
+    width: '40%',
+    borderRadius: 5,
+    marginTop: 20,    
+  },
+  updateButtonText:{
+    color: 'white',
   },
   cell: {
     borderRightWidth: 1,

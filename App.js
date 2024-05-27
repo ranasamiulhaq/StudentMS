@@ -104,7 +104,7 @@ function App() {
         <Stack.Screen options={{title: 'Upload Syllabus'}} name="UploadSyllabus" component={UploadSyllabus} />  
         <Stack.Screen options={{ title: 'Delete Student' }}name="deleteStudents" component={DeleteStudent} />
         <Stack.Screen options={{ title: 'View Student' }} name="viewStudents" component={ViewStudent} />
-        <Stack.Screen options={{headerShown: false}} name="Marks" component={Marks} />
+        <Stack.Screen options={{title: 'Marks'}} name="Marks" component={Marks} />
       </Stack.Navigator>
     </NavigationContainer>
   );
