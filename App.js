@@ -14,7 +14,6 @@ import StudentDashboard from './components/Student/StudentDashborad';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import CurdStudents from './components/Admin/CrudStudent';
 import AddStudent from './components/Admin/AddStudent';
-import Marks from './components/Teacher/marks';
 import AdminClassScreen from './components/Admin/AdminClassScreen'
 import crudFee from './components/Admin/crudFee'
 import viewFeeStatusdetail from './components/Admin/viewFeeStatusdetail'
@@ -104,17 +103,12 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="UploadTimeTable" component={UploadTimeTable} /> 
         <Stack.Screen options={{headerShown: false}} name="UploadSyllabus" component={UploadSyllabus} />  
         <Stack.Screen options={{ title: 'Delete Student' }}name="deleteStudents" component={DeleteStudent} />
-        <Stack.Screen options={{headerShown: false}} name="Marks" component={Marks} />
-
         <Stack.Screen options={{ title: 'View Student' }} name="viewStudents" component={ViewStudent} />
-      
         <Stack.Screen options={{headerShown: false}} name="Marks" component={Marks} />
-
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',

@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, FlatList, TextInput, Button, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import firestore from '@react-native-firebase/firestore';
 
 function Marks({ route }) {
   const [subjects, setSubjects] = useState([]);
-  const { classId } = route.params;
+  const { classId, term } = route.params;
+
   const [open, setOpen] = useState(false);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [items, setItems] = useState([]);
+  const [students, setStudents] = useState([]);
+  const [marks, setMarks] = useState({});
+  const [editableMarks, setEditableMarks] = useState({});
 
   useEffect(() => {
-    // Fetch subjects for the given class from db
     const fetchSubjects = async () => {
       try {
         console.log('Fetching subjects for class:', classId);
         const classRef = await firestore().collection('Classes').where('classId', '==', classId).get();
-        
+
         if (!classRef.empty) {
           console.log('Class document found');
           const classData = classRef.docs[0].data();
@@ -35,6 +38,109 @@ function Marks({ route }) {
 
     fetchSubjects();
   }, [classId]);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        console.log('Fetching students for class:', classId);
+        const studentsRef = await firestore().collection('Students')
+          .where('classId', '==', classId)
+          .get();
+
+        const studentsData = studentsRef.docs.map(doc => doc.data());
+        console.log('Students data:', studentsData);
+        setStudents(studentsData);
+      } catch (error) {
+        console.error('Error fetching students:', error);
+      }
+    };
+
+    fetchStudents();
+  }, [classId]);
+
+  useEffect(() => {
+    const fetchMarks = async () => {
+      if (!selectedSubject) return;
+
+      try {
+        console.log('Fetching marks for subject:', selectedSubject, 'term:', term, 'class:', classId);
+        const marksRef = await firestore().collection('Marks')
+          .where('subjectName', '==', selectedSubject)
+          .where('term', '==', term)
+          .where('classId', '==', classId)
+          .get();
+
+        const marksData = marksRef.docs.reduce((acc, doc) => {
+          const data = doc.data();
+          acc[data.registrationNumber] = data.marksObtained;
+          return acc;
+        }, {});
+
+        console.log('Marks data fetched:', marksData);
+        setMarks(marksData);
+        setEditableMarks(marksData); // Initialize editable marks
+      } catch (error) {
+        console.error('Error fetching marks:', error);
+      }
+    };
+
+    fetchMarks();
+  }, [selectedSubject, term]);
+
+  const handleMarkChange = (registrationNumber, value) => {
+    let maxMarks = 0;
+    if (term === 'first' || term === 'mid') {
+      maxMarks = 25;
+    } else if (term === 'final') {
+      maxMarks = 50;
+    }
+  
+    // Ensure the entered marks do not exceed the maximum allowed marks
+    if (parseInt(value, 10) <= maxMarks || value === '') {
+      setEditableMarks({
+        ...editableMarks,
+        [registrationNumber]: value,
+      });
+    } else {
+      Alert.alert(
+        'Maximum Marks Exceeded',
+        `Maximum marks allowed for ${term} term is ${maxMarks}.`,
+        [
+          { text: 'OK', onPress: () => console.log('OK Pressed') },
+        ],
+        { cancelable: false }
+      );
+    }
+  };
+
+  const updateMarks = async () => {
+    try {
+      const batch = firestore().batch();
+
+      for (const [registrationNumber, marksObtained] of Object.entries(editableMarks)) {
+        const markRef = firestore().collection('Marks').doc(`${classId}_${selectedSubject}_${term}_${registrationNumber}`);
+
+        // Check if the document exists
+        const docSnapshot = await markRef.get();
+        if (!docSnapshot.exists) {
+          console.log(`Creating new document for ${registrationNumber}`);
+        }
+
+        batch.set(markRef, {
+          classId,
+          subjectName: selectedSubject,
+          term,
+          registrationNumber,
+          marksObtained: marksObtained || "", // If marksObtained is null or undefined, set it to an empty string
+        }, { merge: true });
+      }
+
+      await batch.commit();
+      console.log('Marks updated successfully');
+    } catch (error) {
+      console.error('Error updating marks:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -55,6 +161,35 @@ function Marks({ route }) {
           style={styles.dropdown}
         />
       </View>
+
+      <View style={styles.tableContainer}>
+        <Text style={styles.tableHeading}>Students in Class</Text>
+        <View style={styles.headerRow}>
+          <Text style={[styles.headerText, styles.cell, styles.shrink]}>Reg Number</Text>
+          <Text style={[styles.headerText, styles.cell]}>Name</Text>
+          <Text style={[styles.headerText, styles.cell]}>Marks Obtained</Text>
+        </View>
+      </View>
+
+      <View style={styles.tableContainer}>
+        <FlatList
+          data={students}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.row}>
+              <Text style={[styles.cellText, styles.cell, styles.shrink]}>{item.registrationNumber}</Text>
+              <Text style={[styles.cellText, styles.cell]}>{item.name}</Text>
+              <TextInput
+                style={[styles.cellText, styles.cell]}
+                value={String(editableMarks[item.registrationNumber] || '')}
+                onChangeText={(text) => handleMarkChange(item.registrationNumber, text)}
+                keyboardType="numeric"
+              />
+            </View>
+          )}
+        />
+      </View>
+      <Button title="Update Marks" onPress={updateMarks} />
     </View>
   );
 }
@@ -63,7 +198,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    paddingTop: 50, // Add some padding to position elements from the top
+    paddingTop: 50,
   },
   heading: {
     color: '#58B1F4',
@@ -81,6 +216,49 @@ const styles = StyleSheet.create({
   dropdown: {
     backgroundColor: '#fafafa',
     width: '100%',
+  },
+  tableContainer: {
+    width: '80%',
+    marginTop: 20,
+  },
+  tableHeading: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'black',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#f0f0f0',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  headerText: {
+    color: 'black',
+    fontWeight: 'bold',
+    padding: 10,
+    flex: 1,
+  },
+  cellText: {
+    color: 'black',
+    padding: 10,
+    flex: 1,
+  },
+  cell: {
+    borderRightWidth: 1,
+    borderRightColor: '#ccc',
+    textAlign: 'center',
+  },
+  shrink: {
+    flex: 0.5, // Shrink the first column
   },
 });
 
