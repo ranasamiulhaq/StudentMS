@@ -7,6 +7,7 @@ import firestore from '@react-native-firebase/firestore';
 import CurdStudent from './CrudStudent';
 import FeeScreen from './FeeScreen';
 import FeeUsersScreen from './FeeUsersScreen';
+import AdminClassScreen from './AdminClassScreen';
 function AdminDashboard({navigation}) {
     return (
       <View style={Dashboardstyles.container}>
@@ -18,9 +19,11 @@ function AdminDashboard({navigation}) {
               {/* <Icon name="book" size={24} color="#fff" /> */}
               <Text style={Dashboardstyles.buttonText}>Students</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={navigation.navigate('FeeUsersScreen')}>
+            <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{
+              navigation.navigate('crudFee')
+              }}>
               {/* <Icon name="money" size={24} color="#fff" /> */}
-              <Text style={Dashboardstyles.buttonText}>Fees</Text>
+              <Text style={Dashboardstyles.buttonText}>FeeStatus</Text>
             </TouchableOpacity>
           </View>
           <View style={Dashboardstyles.buttonsRow}>
@@ -29,7 +32,6 @@ function AdminDashboard({navigation}) {
               <Text style={Dashboardstyles.buttonText}>Time Table</Text>
             </TouchableOpacity>
             <TouchableOpacity style={Dashboardstyles.dashboardButton}>
-              {/* <Icon name="file-text" size={24} color="#fff" /> */}
               <Text style={Dashboardstyles.buttonText}>Syllabus</Text>
             </TouchableOpacity>
           </View>

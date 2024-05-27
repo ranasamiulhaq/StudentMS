@@ -8,35 +8,39 @@ import firestore from '@react-native-firebase/firestore';
 function AdminLogin({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const verifyLogin = ()=> auth().signInWithEmailAndPassword(email, password).then(() => {
-      const uEmail = auth().currentUser.email;
-      console.log(uEmail);
-      firestore().collection("Users").doc(uEmail).get()
-          .then((documentSnapshot) => {
-              if (documentSnapshot.exists) {
-                  const userRole = documentSnapshot.data().role;
-                  if (userRole === "admin") {
-                      navigation.navigate('adminDashboard');
-                  }
-                  else {
-                    alert("No Such Teacher Exist");
-                  
-                }
+    const verifyLogin = async () => {
+      try {
+          await auth().signInWithEmailAndPassword(email, password);
+  
+          const uEmail = auth().currentUser.email;
+          console.log(uEmail);
+          const userQuerySnapshot = await firestore().collection("Users")
+              .where("email", "==", uEmail)
+              .get();
+            
+  
+          if (!userQuerySnapshot.empty) {
+              const userDoc = userQuerySnapshot.docs[0];
+              const userRole = userDoc.data().role;
+  
+              if (userRole === "admin") {
+                  navigation.navigate('adminDashboard');
               } else {
-                  alert("No Such Teacher Exist");
+                  Alert.alert("No Such Admin Exists");
               }
-          })
-          .catch((error) => {
-              alert(error.message);
-          });
-  })
-  .catch((error) => {
-      alert(error.message);
-  });
+          } else {
+                Alert.alert("Login Error");
+          }
+
+      } catch (error) {
+          Alert.alert(error.message);
+      }
+    
+}
   return (
     <View style={LoginStyles.container}>
       <Image source={require('../../public/img/Logo.png')} style={LoginStyles.logo} />
-      <Text style={LoginStyles.title}>Teacher Login</Text>
+      <Text style={LoginStyles.title}>Admin Login</Text>
       <View style={LoginStyles.inputContainer}>
       <Image source={require('../../public/icons/email.png')} style={LoginStyles.icon} />
         <TextInput

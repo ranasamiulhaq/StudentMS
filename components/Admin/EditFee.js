@@ -1,44 +1,64 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, Switch, StyleSheet, ScrollView } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import { Alert } from 'react-native';
 
-const FeeScreen = ({route}) => {
-  const { student } = route.params;
-  const registrationNumber=student.registrationNumber
-  const [studentName, setStudentName] = useState(student.name);
+const EditFee = ({ route }) => {
+  const registrationNumber = route.params.registrationNumber;
+  const [studentName, setStudentName] = useState('');
   const [amountDue, setAmountDue] = useState('');
   const [amountPaid, setAmountPaid] = useState('');
   const [payableAmount, setPayableAmount] = useState('');
   const [paymentDate, setPaymentDate] = useState('');
   const [lateFees, setLateFees] = useState(false);
   const [remarks, setRemarks] = useState('');
-    useEffect(() => {
-    const currentDate = new Date().toISOString().split('T')[0]; // Format as YYYY-MM-DD
-    setPaymentDate(currentDate);
-  }, []);
-  const handleSave = async () => {
+  const [docId, setDocId] = useState('');
+
+  useEffect(() => {
+    const fetchFee = async () => {
+      try {
+        const feeSnapshot = await firestore()
+          .collection('FeeStatus')
+          .where('registrationNumber', '==', registrationNumber)
+          .get();
+        if (!feeSnapshot.empty) {
+          const feeDoc = feeSnapshot.docs[0];
+          const feeData = feeDoc.data();
+          setDocId(feeDoc.id);
+          setStudentName(feeData.studentName);
+          setAmountDue(feeData.amountDue.toString());
+          setAmountPaid(feeData.amountPaid.toString());
+          setPayableAmount(feeData.payableAmount.toString());
+          setPaymentDate(feeData.paymentDate);
+          setLateFees(feeData.lateFees);
+          setRemarks(feeData.remarks);
+        }
+      } catch (error) {
+        console.error('Error fetching fee record: ', error);
+      }
+    };
+
+    fetchFee();
+  }, [registrationNumber]);
+
+  const handleUpdate = async () => {
     try {
-      await firestore().collection('FeeStatus').add({
-        studentName,
-        amountDue: parseFloat(amountDue),
-        amountPaid: parseFloat(amountPaid),
-        payableAmount: parseFloat(payableAmount),
-        paymentDate,
-        lateFees,
-        remarks,
-        registrationNumber
-      });
-      console.log('Record added successfully!');
-      // Reset the form after saving
-      setStudentName('');
-      setAmountDue('');
-      setAmountPaid('');
-      setPayableAmount('');
-      setPaymentDate('');
-      setLateFees(false);
-      setRemarks('');
+      await firestore()
+        .collection('FeeStatus')
+        .doc(docId)
+        .update({
+          amountDue: parseFloat(amountDue),
+          amountPaid: parseFloat(amountPaid),
+          payableAmount: parseFloat(payableAmount),
+          paymentDate,
+          lateFees,
+          remarks,
+        });
+      console.log('Record updated successfully!');
+      Alert.alert('Success', 'Record has been updated');
     } catch (error) {
-      console.error('Error adding record: ', error);
+      console.error('Error updating record: ', error);
+      Alert.alert('Request Failed', 'Failed to update record');
     }
   };
 
@@ -48,7 +68,7 @@ const FeeScreen = ({route}) => {
       <TextInput
         style={styles.input}
         value={studentName}
-        readOnly={true}
+        editable={false}
       />
       
       <Text style={styles.label}>Amount Due:</Text>
@@ -97,7 +117,7 @@ const FeeScreen = ({route}) => {
         onChangeText={setRemarks}
       />
       
-      <Button title="Save" onPress={handleSave} />
+      <Button title="Update" onPress={handleUpdate} />
     </ScrollView>
   );
 };
@@ -124,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FeeScreen;
+export default EditFee;

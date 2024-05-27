@@ -2,13 +2,10 @@ import { useState } from 'react';
 import { View,StyleSheet, TextInput,StatusBar,SafeView,TouchableOpacity, Alert,Button, Image,Text ,ScrollView} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
-
 import FeeUsersScreen from './components/Admin/FeeUsersScreen';
 import FeeScreen from './components/Admin/FeeScreen';
-
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-
 import StudentLogin from './components/Student/StudentLogin';
 import TeacherLogin from './components/Teacher/TeacherLogin';
 import AdminLogin from './components/Admin/AdminLogin';
@@ -17,6 +14,11 @@ import StudentDashboard from './components/Student/StudentDashborad';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import CurdStudents from './components/Admin/CrudStudent';
 import AddStudent from './components/Admin/AddStudent';
+import AdminClassScreen from './components/Admin/AdminClassScreen'
+import crudFee from './components/Admin/crudFee'
+import viewFeeStatusdetail from './components/Admin/viewFeeStatusdetail'
+import DeleteFeeStatus from './components/Admin/DeleteFeeStatus';
+import EditFee from './components/Admin/EditFee';
 
 const StartingPage = ({ navigation }) => {
   return (
@@ -47,9 +49,7 @@ function App() {
   return (    
     <NavigationContainer>
       <Stack.Navigator>
-      
         <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
-
         <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLogin} />
         <Stack.Screen options={{headerShown: false}} name="teacherLogin" component={TeacherLogin} />
         <Stack.Screen options={{headerShown: false}} name="adminLogin" component={AdminLogin} />
@@ -60,8 +60,11 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="adminDashboard" component={AdminDashboard} />
         <Stack.Screen options={{headerShown: false}} name="FeeUsersScreen" component={FeeUsersScreen} />
         <Stack.Screen options={{headerShown: false}} name="FeeScreen" component={FeeScreen} />
-                
-
+        <Stack.Screen options={{headerShown: false}} name="AdminClassScreen" component={AdminClassScreen} />     
+        <Stack.Screen options={{headerShown: false}} name="crudFee" component={crudFee} /> 
+        <Stack.Screen options={{headerShown: false}} name="viewFeeStatusdetail" component={viewFeeStatusdetail} /> 
+        <Stack.Screen options={{headerShown: false}} name="deletefeeStatus" component={DeleteFeeStatus} /> 
+        <Stack.Screen options={{headerShown: false}} name="EditFee" component={EditFee} />  
       </Stack.Navigator>
     </NavigationContainer>
   );
