@@ -7,37 +7,35 @@ import LinearGradient from 'react-native-linear-gradient';
 function TeacherLogin({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-  
     const verifyLogin = async () => {
-        try {
-            await auth().signInWithEmailAndPassword(email, password);
-    
-            const uEmail = auth().currentUser.email;
-            console.log(uEmail);
-            const userQuerySnapshot = await firestore().collection("Users")
-                .where("email", "==", uEmail)
-                .get();
-              
-    
-            if (!userQuerySnapshot.empty) {
-                const userDoc = userQuerySnapshot.docs[0];
-                const userRole = userDoc.data().role;
-    
-                if (userRole === "teacher") {
-                    navigation.navigate('teacherDashboard');
-                } else {
-                    Alert.alert("No Such Admin Exists");
-                }
-            } else {
-                  Alert.alert("Login Error");
-            }
+      try {
+          await auth().signInWithEmailAndPassword(email, password);
   
-        } catch (error) {
-            Alert.alert(error.message);
+          const uEmail = auth().currentUser.email;
+          console.log(uEmail);
+          const userQuerySnapshot = await firestore().collection("Users")
+              .where("email", "==", uEmail)
+              .get();
+            
+  
+          if (!userQuerySnapshot.empty) {
+              const userDoc = userQuerySnapshot.docs[0];
+              const userRole = userDoc.data().role;
+  
+              if (userRole === "teacher") {
+                  navigation.navigate('teacherDashboard',  { email: uEmail });
+              } else {
+                  Alert.alert("No Such Teacher Exists");
+              }
+          } else {
+                Alert.alert("Login Error");
+          }
+
+      } catch (error) {
+          Alert.alert(error.message);
         }
-      
-  }
-  
+  };
+
   return (
     <View style={LoginStyles.container}>
       <Image source={require('../../public/img/Logo.png')} style={LoginStyles.logo} />
@@ -162,4 +160,3 @@ const LoginStyles = StyleSheet.create({
 
 
 export default TeacherLogin;
-
