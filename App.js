@@ -22,6 +22,7 @@ import DeleteFeeStatus from './components/Admin/DeleteFeeStatus';
 import EditFee from './components/Admin/EditFee';
 import UploadTimeTable from './components/Admin/UploadTimeTable';
 import UploadSyllabus from './components/Admin/UploadSyllabus';
+import Marks from './components/Teacher/marks';
 import DeleteStudent from './components/Admin/deleteStudent';
 import ViewStudent from './components/Admin/viewStudent';
 
@@ -107,6 +108,8 @@ function App() {
 
         <Stack.Screen options={{ title: 'View Student' }} name="viewStudents" component={ViewStudent} />
       
+        <Stack.Screen options={{headerShown: false}} name="Marks" component={Marks} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );
