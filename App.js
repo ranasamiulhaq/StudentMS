@@ -28,6 +28,8 @@ import StudentMarks from './components/Student/StudentMarks';
 import StudentFeeStatus from './components/Student/StudentFeeStatus';
 import Timetable from './components/Student/Timetable';
 import Syllabus from './components/Student/Syllabus';
+import  TeacherList from './components/Admin/TeacherList';
+import AssignTeacher from './components/Admin/AssignTeacher';
 
 const StartingPage = ({ navigation }) => {
   return (
@@ -113,6 +115,8 @@ function App() {
         <Stack.Screen options={{title:'StudentFeeStatus'}} name="StudentFeeStatus" component={StudentFeeStatus} />
         <Stack.Screen options={{title:'Timetable'}} name="Timetable" component={Timetable} />
         <Stack.Screen options={{title:'Syllabus'}} name="Syllabus" component={Syllabus} />
+        <Stack.Screen options={{title:'Teachers'}} name="TeacherList" component={TeacherList} />
+        <Stack.Screen options={{title:'Assign Class'}} name="AssignTeacher" component={AssignTeacher} />
       </Stack.Navigator>
     </NavigationContainer>
   );

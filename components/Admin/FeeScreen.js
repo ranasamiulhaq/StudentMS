@@ -14,8 +14,8 @@ const FeeScreen = ({route}) => {
   const [lateFees, setLateFees] = useState(false);
   const [remarks, setRemarks] = useState('');
     useEffect(() => {
-    const currentDate = new Date().toISOString().split('T')[0]; // Format as YYYY-MM-DD
-    setPaymentDate(currentDate);
+    const currentDate = new Date().toISOString().split('T')[0]; 
+        setPaymentDate(currentDate);
   }, []);
   const handleSave = async () => {
     try {

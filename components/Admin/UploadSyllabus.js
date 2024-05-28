@@ -25,7 +25,7 @@ const UploadSyllabus = () => {
 
     setUploading(true);
     setProgress(0);
-    const filename = `${className}.jpg`; // Set the filename to the class name
+    const filename = `${className}.jpg`; 
     const uploadUri = imageUri.replace('file://', '');
 
     const task = storage()

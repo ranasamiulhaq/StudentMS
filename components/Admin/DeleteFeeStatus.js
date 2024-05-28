@@ -10,24 +10,26 @@ const DeleteFeeStatus = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredFees, setFilteredFees] = useState([]);
   const navigation = useNavigation();
+useEffect(()=>{
+  const fetchFees = async () => {
+    try {
+      const feeCollection = await firestore().collection('FeeStatus').get();
+      const feeList = feeCollection.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setFees(feeList);
+      setFilteredFees(feeList);
+    } catch (error) {
+      console.error("Error fetching fees: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    const fetchFees = async () => {
-      try {
-        const feeCollection = await firestore().collection('FeeStatus').get();
-        const feeList = feeCollection.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setFees(feeList);
-        setFilteredFees(feeList);
-      } catch (error) {
-        console.error("Error fetching fees: ", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  fetchFees();
+},[fees])
 
-    fetchFees();
 
   const handleSearch = (term) => {
     if (term) {
@@ -45,7 +47,7 @@ const DeleteFeeStatus = () => {
   const handleDelete=async(item)=>{
     try {
         await firestore().collection('FeeStatus').doc(item.id).delete();
-        await fetchFees()
+        setFees([])
         Alert.alert('Success', 'Fee deleted successfully');
       } catch (error) {
         console.error('Error deleting fee: ', error);

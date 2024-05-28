@@ -28,7 +28,6 @@ function AdminDashboard({navigation}) {
                 </TouchableOpacity>
                 <Text style={Dashboardstyles.buttonText}>Reports</Text>
             </View>
-
           
           </View>
           
@@ -55,8 +54,20 @@ function AdminDashboard({navigation}) {
                 </TouchableOpacity>
                 <Text style={Dashboardstyles.buttonText}>Fees</Text>
             </View>
+
+
           </View>
 
+          <View style={Dashboardstyles.buttonsRow}>
+          <View style={Dashboardstyles.IconContainer}>
+                <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('TeacherList')}}>
+                  <Image source={require('../../public/icons/report.png')} style={Dashboardstyles.image} />
+                </TouchableOpacity>
+                <Text style={Dashboardstyles.buttonText}>Teachers</Text>
+            </View>
+
+          </View>
+          
         </View>
         <TouchableOpacity style={Dashboardstyles.backButton} onPress={()=>{navigation.navigate('Land')}}>
                   <Text style={Dashboardstyles.backText}>Logout</Text>

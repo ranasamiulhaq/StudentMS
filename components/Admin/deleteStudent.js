@@ -26,7 +26,6 @@ const DeleteStudent = ({ navigation }) => {
                 return;
             }
 
-            // Assuming there's only one student with the provided details
             deleteQuerySnapshot.forEach(async doc => {
                 await doc.ref.delete();
             });
