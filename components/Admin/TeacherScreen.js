@@ -10,35 +10,24 @@ const CurdStudent = ({navigation}) => {
       <View style={Dashboardstyles.container}>
        
         <View style={Dashboardstyles.dashboardContainer}>
-          <Text style={Dashboardstyles.dashboardTitle}>Student Operations</Text>
+          <Text style={Dashboardstyles.dashboardTitle}>Teacher Operations</Text>
 
           <View style={Dashboardstyles.buttonsRow}>
             <View style={Dashboardstyles.IconContainer}>
-                <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('addStudents')}}>
+                <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('addTeacher')}}>
                   <Image source={require('../../public/icons/student.png')} style={Dashboardstyles.image} />
                 </TouchableOpacity>
-                <Text style={Dashboardstyles.buttonText}>Add</Text>
+                <Text style={Dashboardstyles.buttonText}>Add Teacher</Text>
             </View>
 
             <View style={Dashboardstyles.IconContainer}>
-                <TouchableOpacity style={Dashboardstyles.dashboardButton}  onPress={()=>{navigation.navigate('viewStudents')}}>
+                <TouchableOpacity style={Dashboardstyles.dashboardButton}  onPress={()=>{navigation.navigate('TeacherList')}}>
                   <Image source={require('../../public/icons/marks.png')} style={Dashboardstyles.image} />
                 </TouchableOpacity>
-                <Text style={Dashboardstyles.buttonText}>View</Text>
+                <Text style={Dashboardstyles.buttonText}>Assign Teacher</Text>
+                
             </View>
-            <View style={Dashboardstyles.IconContainer}>
-                <TouchableOpacity style={Dashboardstyles.dashboardButton}  onPress={()=>{navigation.navigate('editStudents')}}>
-                  <Image source={require('../../public/icons/marks.png')} style={Dashboardstyles.image} />
-                </TouchableOpacity>
-                <Text style={Dashboardstyles.buttonText}>Edit</Text>
-            </View>
-
-            <View style={Dashboardstyles.IconContainer}>
-                <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('deleteStudents')}}>
-                  <Image source={require('../../public/icons/report.png')} style={Dashboardstyles.image} />
-                </TouchableOpacity>
-                <Text style={Dashboardstyles.buttonText}>Delete</Text>
-            </View>
+            
 
           </View>
 

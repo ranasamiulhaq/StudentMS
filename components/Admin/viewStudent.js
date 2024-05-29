@@ -7,25 +7,40 @@ const ViewStudent = ({ navigation }) => {
     const [admissionClass, setAdmissionClass] = useState('');
     const [registrationNumber, setRegistrationNumber] = useState('');
     const [studentDetails, setStudentDetails] = useState(null);
+    const [studentsList, setStudentsList] = useState([]);
 
     const handleViewStudent = async () => {
-        if (!admissionClass || !registrationNumber) {
-            Alert.alert('Missing Information', 'Please select class and enter registration number');
-            return;
-        }
-
         try {
-            const studentQuerySnapshot = await firestore().collection('Students')
-                .where('registrationNumber', '==', parseInt(registrationNumber))
-                .where('admissionClass', '==', admissionClass)
-                .get();
+            if (admissionClass && registrationNumber) {
+                const studentQuerySnapshot = await firestore().collection('Students')
+                    .where('registrationNumber', '==', parseInt(registrationNumber))
+                    .where('admissionClass', '==', admissionClass)
+                    .get();
 
-            if (studentQuerySnapshot.empty) {
-                Alert.alert('Not Found', 'No student found with the given details');
-                setStudentDetails(null);
+                if (studentQuerySnapshot.empty) {
+                    Alert.alert('Not Found', 'No student found with the given details');
+                    setStudentDetails(null);
+                } else {
+                    const studentData = studentQuerySnapshot.docs[0].data();
+                    setStudentDetails(studentData);
+                    setStudentsList([]);  // Clear the list if a specific student is found
+                }
+            } else if (admissionClass && !registrationNumber) {
+                const studentsQuerySnapshot = await firestore().collection('Students')
+                    .where('admissionClass', '==', admissionClass)
+                    .get();
+
+                if (studentsQuerySnapshot.empty) {
+                    Alert.alert('Not Found', 'No students found in the selected class');
+                    setStudentsList([]);
+                    setStudentDetails(null);
+                } else {
+                    const studentsData = studentsQuerySnapshot.docs.map(doc => doc.data());
+                    setStudentsList(studentsData);
+                    setStudentDetails(null);  // Clear the specific student detail if multiple students are found
+                }
             } else {
-                const studentData = studentQuerySnapshot.docs[0].data();
-                setStudentDetails(studentData);
+                Alert.alert('Missing Information', 'Please select a class');
             }
         } catch (error) {
             Alert.alert('Error', error.message);
@@ -80,7 +95,20 @@ const ViewStudent = ({ navigation }) => {
                     <Text style={styles.studentDetailText}>Remarks: {studentDetails.remarks}</Text>
                 </View>
             )}
-            
+            {studentsList.length > 0 && studentsList.map((student, index) => (
+                <View key={index} style={styles.studentDetails}>
+                    <Text style={styles.studentDetailText}>Name: {student.name}</Text>
+                    <Text style={styles.studentDetailText}>Date of Birth: {new Date(student.dateOfBirth.seconds * 1000).toDateString()}</Text>
+                    <Text style={styles.studentDetailText}>Gender: {student.gender}</Text>
+                    <Text style={styles.studentDetailText}>Father's Name: {student.fatherDetails.fatherName}</Text>
+                    <Text style={styles.studentDetailText}>Caste: {student.fatherDetails.caste}</Text>
+                    <Text style={styles.studentDetailText}>Occupation: {student.fatherDetails.occupation}</Text>
+                    <Text style={styles.studentDetailText}>Residence: {student.fatherDetails.residence}</Text>
+                    <Text style={styles.studentDetailText}>Admission Class: {student.admissionClass}</Text>
+                    <Text style={styles.studentDetailText}>Email: {student.email}</Text>
+                    <Text style={styles.studentDetailText}>Remarks: {student.remarks}</Text>
+                </View>
+            ))}
         </ScrollView>
     );
 };

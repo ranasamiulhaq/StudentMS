@@ -14,6 +14,7 @@ import StudentDashboard from './components/Student/StudentDashborad';
 import AdminDashboard from './components/Admin/AdminDashboard';
 import CurdStudents from './components/Admin/CrudStudent';
 import AddStudent from './components/Admin/AddStudent';
+import EditStudent from './components/Admin/editStudent';
 import AdminClassScreen from './components/Admin/AdminClassScreen'
 import crudFee from './components/Admin/crudFee'
 import viewFeeStatusdetail from './components/Admin/viewFeeStatusdetail'
@@ -29,6 +30,7 @@ import StudentFeeStatus from './components/Student/StudentFeeStatus';
 import Timetable from './components/Student/Timetable';
 import Syllabus from './components/Student/Syllabus';
 import  TeacherList from './components/Admin/TeacherList';
+import  TeacherScreen from './components/Admin/TeacherScreen';
 import AssignTeacher from './components/Admin/AssignTeacher';
 
 const StartingPage = ({ navigation }) => {
@@ -99,6 +101,7 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="teacherDashboard" component={TeacherDashboard} />
         <Stack.Screen options={{headerShown: false}} name="curdStudents" component={CurdStudents} />
         <Stack.Screen options={{ title: 'Add Student' }} name="addStudents" component={AddStudent} />
+        <Stack.Screen options={{ title: 'Edit Student' }} name="editStudents" component={EditStudent} />
         <Stack.Screen options={{headerShown: false}} name="FeeUsersScreen" component={FeeUsersScreen} />
         <Stack.Screen options={{headerShown: false}} name="FeeScreen" component={FeeScreen} />
         <Stack.Screen options={{title: 'Generate Fee'}} name="AdminClassScreen" component={AdminClassScreen} />     
@@ -116,6 +119,7 @@ function App() {
         <Stack.Screen options={{title:'Timetable'}} name="Timetable" component={Timetable} />
         <Stack.Screen options={{title:'Syllabus'}} name="Syllabus" component={Syllabus} />
         <Stack.Screen options={{title:'Teachers'}} name="TeacherList" component={TeacherList} />
+        <Stack.Screen options={{headerShown: false}} name="TeacherScreen" component={TeacherScreen} />
         <Stack.Screen options={{title:'Assign Class'}} name="AssignTeacher" component={AssignTeacher} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -33,12 +33,11 @@ function AdminDashboard({navigation}) {
           
           <View style={Dashboardstyles.buttonsRow}>
                      
-            
-            <View style={Dashboardstyles.IconContainer}>
-                <TouchableOpacity style={Dashboardstyles.dashboardButton}>
-                  <Image source={require('../../public/icons/class.png')} style={Dashboardstyles.image} />
+          <View style={Dashboardstyles.IconContainer}>
+                <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('TeacherScreen')}}>
+                  <Image source={require('../../public/icons/report.png')} style={Dashboardstyles.image} />
                 </TouchableOpacity>
-                <Text style={Dashboardstyles.buttonText}>Class</Text>
+                <Text style={Dashboardstyles.buttonText}>Teachers</Text>
             </View>
 
             <View style={Dashboardstyles.IconContainer}>
@@ -59,12 +58,7 @@ function AdminDashboard({navigation}) {
           </View>
 
           <View style={Dashboardstyles.buttonsRow}>
-          <View style={Dashboardstyles.IconContainer}>
-                <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('TeacherList')}}>
-                  <Image source={require('../../public/icons/report.png')} style={Dashboardstyles.image} />
-                </TouchableOpacity>
-                <Text style={Dashboardstyles.buttonText}>Teachers</Text>
-            </View>
+          
 
           </View>
           
