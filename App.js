@@ -25,6 +25,7 @@ import UploadSyllabus from './components/Admin/UploadSyllabus';
 import Marks from './components/Teacher/marks';
 import DeleteStudent from './components/Admin/deleteStudent';
 import ViewStudent from './components/Admin/viewStudent';
+import ResultScreen from './components/Admin/ResultScreen';
 import StudentMarks from './components/Student/StudentMarks';
 import StudentFeeStatus from './components/Student/StudentFeeStatus';
 import Timetable from './components/Student/Timetable';
@@ -92,8 +93,10 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
+      <Stack.Screen options={{headerShown: false}} name="ResultScreen" component={ResultScreen} />
         <Stack.Screen options={{headerShown: false}} name="adminDashboard" component={AdminDashboard} />
-        <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
+        
         <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLogin} />
         <Stack.Screen options={{headerShown: false}} name="teacherLogin" component={TeacherLogin} />
         <Stack.Screen options={{headerShown: false}} name="adminLogin" component={AdminLogin} />
