@@ -25,6 +25,7 @@ import UploadSyllabus from './components/Admin/UploadSyllabus';
 import Marks from './components/Teacher/marks';
 import DeleteStudent from './components/Admin/deleteStudent';
 import ViewStudent from './components/Admin/viewStudent';
+import ResultScreen from './components/Admin/ResultScreen';
 import StudentMarks from './components/Student/StudentMarks';
 import StudentFeeStatus from './components/Student/StudentFeeStatus';
 import Timetable from './components/Student/Timetable';
@@ -95,8 +96,10 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+      <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
+      <Stack.Screen options={{headerShown: false}} name="ResultScreen" component={ResultScreen} />
         <Stack.Screen options={{headerShown: false}} name="adminDashboard" component={AdminDashboard} />
-        <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
+        
         <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLogin} />
         <Stack.Screen options={{headerShown: false}} name="teacherLogin" component={TeacherLogin} />
         <Stack.Screen options={{headerShown: false}} name="adminLogin" component={AdminLogin} />
@@ -126,6 +129,7 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="ReportScreen" component={Reports} />
         <Stack.Screen options={{title:'Assign Class'}} name="AssignTeacher" component={AssignTeacher} />
         <Stack.Screen options={{title:'Age Report'}} name="AgeReport" component={AgeReport} />
+<Stack.Screen options={{title:'Result Report'}} name="ResultReport" component={ResultScreen} />
         <Stack.Screen options={{title:'Class Age Report'}} name="ClassAgeReport" component={ClassAgeReport} />
       </Stack.Navigator>
     </NavigationContainer>

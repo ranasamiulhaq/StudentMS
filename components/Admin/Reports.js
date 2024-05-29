@@ -28,7 +28,7 @@ const CurdStudent = ({navigation}) => {
             </View>
 
             <View style={Dashboardstyles.IconContainer}>
-                <TouchableOpacity style={Dashboardstyles.dashboardButton}  onPress={()=>{navigation.navigate('viewStudents')}}>
+                <TouchableOpacity style={Dashboardstyles.dashboardButton}  onPress={()=>{navigation.navigate('ResultReport')}}>
                   <Image source={require('../../public/icons/marks.png')} style={Dashboardstyles.image} />
                 </TouchableOpacity>
                 <Text style={Dashboardstyles.buttonText}>Result Report</Text>

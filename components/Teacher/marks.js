@@ -86,7 +86,7 @@ function Marks({ route }) {
 
         console.log('Marks data fetched:', marksData);
         setMarks(marksData);
-        setEditableMarks(marksData); // Initialize editable marks
+        setEditableMarks(marksData); 
       } catch (error) {
         console.error('Error fetching marks:', error);
       }
@@ -103,7 +103,6 @@ function Marks({ route }) {
       maxMarks = 50;
     }
   
-    // Ensure the entered marks do not exceed the maximum allowed marks
     if (parseInt(value, 10) <= maxMarks || value === '') {
       setEditableMarks({
         ...editableMarks,
@@ -139,7 +138,7 @@ function Marks({ route }) {
           subjectName: selectedSubject,
           term,
           registrationNumber,
-          marksObtained: marksObtained || "", // If marksObtained is null or undefined, set it to an empty string
+          marksObtained: marksObtained || "", 
         }, { merge: true });
       }
 
@@ -172,7 +171,7 @@ function Marks({ route }) {
       <View style={styles.tableContainer}>
         <Text style={styles.tableHeading}>Students in Class</Text>
         <View style={styles.headerRow}>
-          <Text style={[styles.headerText, styles.cell, styles.shrink]}>Reg Number</Text>
+          <Text style={[styles.headerText, styles.cell, styles.shrink]}>Reg No</Text>
           <Text style={[styles.headerText, styles.cell]}>Name</Text>
           <Text style={[styles.headerText, styles.cell]}>Marks Obtained</Text>
         </View>
@@ -279,7 +278,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   shrink: {
-    flex: 0.5, // Shrink the first column
+    flex: 0.5, 
   },
 });
 

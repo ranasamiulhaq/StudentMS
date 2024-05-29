@@ -26,7 +26,7 @@ const TeacherDashboard = ({route}) => {
         if (!teacherSnapshot.empty) {
           const teacherData = teacherSnapshot.docs[0].data();
           const name = teacherData.name; 
-          const className = teacherData.assignedClass;
+          const className = teacherData.assignedclass;
           console.log(name);
           console.log(className);
           setTeacherName(name);
