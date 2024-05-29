@@ -23,7 +23,7 @@ function AdminDashboard({navigation}) {
             </View>
 
             <View style={Dashboardstyles.IconContainer}>
-                <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('curdStudents')}}>
+                <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('ReportScreen')}}>
                   <Image source={require('../../public/icons/report.png')} style={Dashboardstyles.image} />
                 </TouchableOpacity>
                 <Text style={Dashboardstyles.buttonText}>Reports</Text>

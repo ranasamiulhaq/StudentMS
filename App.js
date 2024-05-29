@@ -29,9 +29,12 @@ import StudentMarks from './components/Student/StudentMarks';
 import StudentFeeStatus from './components/Student/StudentFeeStatus';
 import Timetable from './components/Student/Timetable';
 import Syllabus from './components/Student/Syllabus';
-import  TeacherList from './components/Admin/TeacherList';
-import  TeacherScreen from './components/Admin/TeacherScreen';
+import TeacherList from './components/Admin/TeacherList';
+import TeacherScreen from './components/Admin/TeacherScreen';
 import AssignTeacher from './components/Admin/AssignTeacher';
+import Reports from './components/Admin/Reports';
+import AgeReport from './components/Admin/AgeReport';
+import ClassAgeReport from './components/Admin/ClassAgeReport';
 
 const StartingPage = ({ navigation }) => {
   return (
@@ -120,7 +123,10 @@ function App() {
         <Stack.Screen options={{title:'Syllabus'}} name="Syllabus" component={Syllabus} />
         <Stack.Screen options={{title:'Teachers'}} name="TeacherList" component={TeacherList} />
         <Stack.Screen options={{headerShown: false}} name="TeacherScreen" component={TeacherScreen} />
+        <Stack.Screen options={{headerShown: false}} name="ReportScreen" component={Reports} />
         <Stack.Screen options={{title:'Assign Class'}} name="AssignTeacher" component={AssignTeacher} />
+        <Stack.Screen options={{title:'Age Report'}} name="AgeReport" component={AgeReport} />
+        <Stack.Screen options={{title:'Class Age Report'}} name="ClassAgeReport" component={ClassAgeReport} />
       </Stack.Navigator>
     </NavigationContainer>
   );
