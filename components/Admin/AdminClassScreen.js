@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const AdminClassScreen = () => {
   const navigation = useNavigation();
@@ -16,7 +17,6 @@ const AdminClassScreen = () => {
           id: doc.id,
           ...doc.data()
         }));
-        console.log("Classes :", classList)
         setClasses(classList);
       } catch (error) {
         console.error("Error fetching classes: ", error);
@@ -29,28 +29,36 @@ const AdminClassScreen = () => {
   }, []);
 
   const handlePress = (item) => {
-    console.log("Passed item: ", item);
     navigation.navigate('FeeUsersScreen', { className: item.className });
   }
 
   const renderClassItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handlePress(item)}>
-      <View style={styles.item}>
-        <Text style={styles.name}>{item.className}</Text>
+    <TouchableOpacity onPress={() => handlePress(item)} style={styles.item}>
+      <View style={styles.iconContainer}>
+        <Icon name="school" size={24} color="#58B1F4" />
       </View>
+      <Text style={styles.name}>{item.className}</Text>
+      <Icon name="chevron-right" size={24} color="#58B1F4" />
     </TouchableOpacity>
   );
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#58B1F4" />
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
   }
 
   return (
     <View style={styles.container}>
+      <Text style={styles.header}>Class List</Text>
       <FlatList
         data={classes}
         keyExtractor={(item) => item.id}
         renderItem={renderClassItem}
+        contentContainerStyle={styles.listContainer}
       />
     </View>
   );
@@ -60,19 +68,46 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    paddingHorizontal: 16,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 18,
+    color: '#58B1F4',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#58B1F4',
+    marginVertical: 16,
+    alignSelf: 'center',
+  },
+  listContainer: {
+    paddingBottom: 16,
   },
   item: {
-    backgroundColor: '#f9f9f9',
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f1f1f1',
     paddingHorizontal: 16,
     paddingVertical: 12,
     marginBottom: 8,
     borderRadius: 8,
     elevation: 2,
   },
+  iconContainer: {
+    marginRight: 16,
+  },
   name: {
+    flex: 1,
     fontSize: 16,
     fontWeight: 'bold',
-    marginBottom: 4,
+    color: '#333',
   },
 });
 
