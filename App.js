@@ -93,8 +93,8 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen options={{headerShown: false}} name="ResultScreen" component={ResultScreen} />
       <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
+      <Stack.Screen options={{headerShown: false}} name="ResultScreen" component={ResultScreen} />
         <Stack.Screen options={{headerShown: false}} name="adminDashboard" component={AdminDashboard} />
         
         <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLogin} />
