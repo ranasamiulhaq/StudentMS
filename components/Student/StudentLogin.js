@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { View,StyleSheet, TextInput,StatusBar,SafeView,TouchableOpacity, Alert,Button, Image,Text ,ScrollView} from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator} from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import LinearGradient from 'react-native-linear-gradient';
 
 function StudentLogin({ navigation }) {
     const [email, setEmail] = useState('');
@@ -81,12 +80,19 @@ function StudentLogin({ navigation }) {
           onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity style={LoginStyles.button} onPress={()=>verifyLogin()}>
-        <Text style={LoginStyles.buttonText}>Login</Text>
-      </TouchableOpacity>
-      <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
-      <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
+      <View style={LoginStyles.buttonContainer}>
+    <Text style={LoginStyles.forget} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
+    <LinearGradient colors={['#58B1F4','#2a73ba']} style={LoginStyles.LoginButton}>
+    <TouchableOpacity onPress={()=>verifyLogin()}>
+      <Text style={LoginStyles.buttonText}>Login</Text>
+    </TouchableOpacity>
+    </LinearGradient>
     </View>
+    <View style={LoginStyles.linkContainer}  >
+    <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to</Text>
+    <Text style={LoginStyles.linkBold} onPress={() => navigation.navigate('Land')}> Home Page</Text>
+    </View>
+  </View>
     );
   };
 
@@ -98,9 +104,9 @@ function StudentLogin({ navigation }) {
       backgroundColor: '#E8F4FF',
     },
     logo: {
-      width: 100,
-      height: 100,
-      marginBottom: 20,
+      width: '20%',
+      height: '20%',
+      resizeMode: 'contain'
     },
     title: {
       fontSize: 24,
@@ -111,35 +117,65 @@ function StudentLogin({ navigation }) {
       flexDirection: 'row',
       alignItems: 'center',
       width: '80%',
-      padding: 15,
+      padding: 0,
       borderColor: '#ccc',
       borderWidth: 1,
       borderRadius: 10,
       marginBottom: 20,
     },
     icon: {
-      marginRight: 10,
+      marginLeft:10,
+      marginRight: 20,
+      width: '10%',
+      height: '50%',
+      resizeMode: 'contain'
     },
     input: {
       flex: 1,
-      color: 'black',
     },
     button: {
-      backgroundColor: '#58B1F4',
-      padding: 15,
-      borderRadius: 10,
-      width: '80%',
-      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignContent: 'center',
     },
     buttonText: {
       color: '#fff',
       fontSize: 18,
+      alignSelf: 'center',
+      justifyContent: 'center',
+    },
+    forget: {
+      color: '#58B1F4',
+      fontSize: 12,
     },
     link: {
+      marginTop: 60,
       color: '#58B1F4',
-      marginTop: 15,
-      fontSize: 16,
+      fontSize: 12,
     },
+    linkBold: {
+      marginTop: 60,
+      color: '#58B1F4',
+      fontSize: 12,
+      fontWeight: 'bold',
+    },
+    buttonContainer:{
+      width:'80%',
+      alignItems:'flex-end',
+  
+    },
+    
+    LoginButton:{
+      marginTop:20,
+      alignItems:'center',
+      justifyContent:'center',
+      width:'40%',
+      borderRadius:10,
+      height: 40,
+    },
+    linkContainer:{
+      flexDirection:'row'
+    }
   });
   
   export default StudentLogin;

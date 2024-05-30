@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { View,StyleSheet, TextInput,StatusBar,SafeView,TouchableOpacity, Alert,Button, Image,Text ,ScrollView} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator} from '@react-navigation/native-stack';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
 
 const CurdStudent = ({navigation}) => {
+  
     return (
       <View style={Dashboardstyles.container}>
        

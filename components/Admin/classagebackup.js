@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, ScrollView, Alert, Button } from 'react-native';
+import { View, StyleSheet, Text, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import firestore from '@react-native-firebase/firestore';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
-import { share } from 'react-native-share';
 
 const ViewStudent = ({ navigation }) => {
     const [admissionClass, setAdmissionClass] = useState('');
@@ -18,6 +16,7 @@ const ViewStudent = ({ navigation }) => {
         const ageMonths = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
         return { years: ageYears, months: ageMonths };
     }
+
 
     const generateAgeReport = (students) => {
         const ageMap = new Map();
@@ -77,87 +76,6 @@ const ViewStudent = ({ navigation }) => {
             setAgeReport(report);
         }
     }, [studentsList]);
-
-      const createPDF = async () => {
-        try {
-            let htmlContent = `
-                <html>
-                    <head>
-                        <style>
-                            table { width: 100%; border-collapse: collapse; }
-                            th, td { border: 1px solid black; padding: 8px; text-align: center; }
-                            th { background-color: #f2f2f2; }
-                            .listHeader { font-size: 16px; font-weight: bold; margin-bottom: 10px; text-align: center; }
-                        </style>
-                    </head>
-                    <body>
-                        <h1 class="listHeader">Student Age Record Report for Class ${admissionClass}</h1>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Registration No</th>
-                                    <th>Student Name</th>
-                                    <th>Father Name</th>
-                                    <th>Date of Birth</th>
-                                    <th>Age (Years & Months)</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${studentsList.map(student => `
-                                    <tr>
-                                        <td>${student.registrationNumber}</td>
-                                        <td>${student.name}</td>
-                                        <td>${student.fatherDetails.fatherName}</td>
-                                        <td>${new Date(student.dateOfBirth.seconds * 1000).toDateString()}</td>
-                                        <td>${calculateAge(student.dateOfBirth).years} years ${calculateAge(student.dateOfBirth).months} months</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                        <h1 class="listHeader">Age Distribution</h1>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Age</th>
-                                    <th>Number</th>
-                                    <th>Boys</th>
-                                    <th>Girls</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${ageReport ? Array.from(ageReport.entries()).map(([key, value]) => `
-                                    <tr>
-                                        <td>${key}</td>
-                                        <td>${value.count}</td>
-                                        <td>${value.boys}</td>
-                                        <td>${value.girls}</td>
-                                    </tr>
-                                `).join('') : ''}
-                            </tbody>
-                        </table>
-                    </body>
-                </html>
-            `;
-
-            let options = {
-                html: htmlContent,
-                fileName: 'StudentReport',
-                directory: 'Documents',
-            };
-
-            let file = await RNHTMLtoPDF.convert(options);
-            Alert.alert('Success', 'PDF generated at ' + file.filePath);
-
-            // Optionally, you can share the PDF
-            // const shareOptions = {
-            //     title: 'Share PDF',
-            //     url: `file://${file.filePath}`,
-            // };
-            // Share.open(shareOptions);
-        } catch (error) {
-            Alert.alert('Error', 'Failed to generate PDF');
-        }
-    };
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -225,9 +143,6 @@ const ViewStudent = ({ navigation }) => {
                     ))}
                 </View>
             </View>
-
-            {/* PDF Generation Button */}
-            <Button title="Generate PDF" onPress={createPDF} />
         </ScrollView>
     );
 };
@@ -292,3 +207,4 @@ const styles = StyleSheet.create({
 });
 
 export default ViewStudent;
+

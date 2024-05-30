@@ -128,8 +128,8 @@ function App() {
         <Stack.Screen options={{headerShown: false}} name="TeacherScreen" component={TeacherScreen} />
         <Stack.Screen options={{headerShown: false}} name="ReportScreen" component={Reports} />
         <Stack.Screen options={{title:'Assign Class'}} name="AssignTeacher" component={AssignTeacher} />
-        <Stack.Screen options={{title:'Age Report'}} name="AgeReport" component={AgeReport} />
 <Stack.Screen options={{title:'Result Report'}} name="ResultReport" component={ResultScreen} />
+      <Stack.Screen options={{title:'Age Report'}} name="AgeReport" component={AgeReport} />
         <Stack.Screen options={{title:'Class Age Report'}} name="ClassAgeReport" component={ClassAgeReport} />
       </Stack.Navigator>
     </NavigationContainer>
