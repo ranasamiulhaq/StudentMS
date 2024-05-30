@@ -7,10 +7,8 @@ import LinearGradient from 'react-native-linear-gradient';
 function StudentLogin({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
 
     const verifyLogin = async () => {
-        setLoading(true); // Set loading to true when login starts
         try {
             await auth().signInWithEmailAndPassword(email, password);
 
@@ -33,9 +31,7 @@ function StudentLogin({ navigation }) {
             }
         } catch (error) {
             alert(error.message);
-        } finally {
-            setLoading(false); // Set loading to false when login completes or encounters an error
-        }
+        } 
     };
 
     return (
@@ -61,12 +57,8 @@ function StudentLogin({ navigation }) {
                     onChangeText={setPassword}
                 />
             </View>
-            <TouchableOpacity style={LoginStyles.button} onPress={verifyLogin} disabled={loading}>
-                {loading ? (
-                    <ActivityIndicator size="small" color="#ffffff" />
-                ) : (
+            <TouchableOpacity style={LoginStyles.button} onPress={verifyLogin} >
                     <Text style={LoginStyles.buttonText}>Login</Text>
-                )}
             </TouchableOpacity>
             <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
             <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
@@ -113,12 +105,16 @@ const LoginStyles = StyleSheet.create({
         color: 'black',
     },
     button: {
+    backgroundColor:'#58B1F4',
+    borderRadius:10,
+    width:'20%',
       flexDirection: 'row',
       justifyContent: 'center',
-      alignContent: 'center',
+      
     },
     buttonText: {
       color: '#fff',
+      padding:5,
       fontSize: 18,
       alignSelf: 'center',
       justifyContent: 'center',
