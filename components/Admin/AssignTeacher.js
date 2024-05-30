@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text,ActivityIndicator, StyleSheet, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Alert } from 'react-native';
+
 import firestore from '@react-native-firebase/firestore';
 
 
 const AssignTeacher = ({navigation,route}) => {
 
   const {teacherId,name, assignedclass } = route.params || {};
+  const [loading, setLoading] = useState(false);
   const [selectedClass, setSelectedClass] = useState(assignedclass);
 
   const handleUpdate = async () => {
+    setLoading(true);
     try {
       await firestore().collection('Teachers').doc(teacherId).update({
         assignedclass: selectedClass,
@@ -21,7 +24,18 @@ const AssignTeacher = ({navigation,route}) => {
       console.error("Error updating class: ", error);
       Alert.alert('Error', 'Failed to update class');
     }
+    finally {
+      setLoading(false);
+  }
   };
+  if(loading){
+    return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#58B1F4" />
+          <Text style={styles.loadingText}>Assigning Class</Text>
+        </View>
+      )}
+
 
   return (
     <View style={styles.container}>
@@ -59,6 +73,16 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 18,
+    color: '#58B1F4',
   },
   label: {
     fontSize: 18,

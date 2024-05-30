@@ -86,6 +86,7 @@ const ViewStudent = ({ navigation }) => {
     }, [studentsByClass]);
 
     const createPDF = async () => {
+        setLoading(true);
         try {
             let htmlContent = `
                 <html>
@@ -164,6 +165,9 @@ const ViewStudent = ({ navigation }) => {
             // Share.open(shareOptions);
         } catch (error) {
             Alert.alert('Error', 'Failed to generate PDF' + error);
+        }
+        finally {
+            setLoading(false);
         }
     };
     if (loading) {

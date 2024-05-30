@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity, Alert, Text, ScrollView, Dimensions } from 'react-native';
+import { View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, Text, ScrollView, Dimensions } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { Picker } from '@react-native-picker/picker';
 
 
 
 const DeleteStudent = ({ navigation }) => {
+    const [loading, setLoading] = useState(false);
     const [registrationNumber, setRegistrationNumber] = useState('');
     const [admissionClass, setAdmissionClass] = useState('');
 
@@ -14,7 +15,7 @@ const DeleteStudent = ({ navigation }) => {
             Alert.alert('Missing Information', 'Please fill in all fields');
             return;
         }
-
+        setLoading(true);
         try {
             const deleteQuerySnapshot = await firestore().collection('Students')
                 .where('registrationNumber', '==', parseInt(registrationNumber))
@@ -34,7 +35,18 @@ const DeleteStudent = ({ navigation }) => {
         } catch (error) {
             Alert.alert('Error', error.message);
         }
+        finally {
+            setLoading(false);
+        }
     };
+    if(loading){
+        return (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#58B1F4" />
+              <Text style={styles.loadingText}>Deleting Students</Text>
+            </View>
+          )}
+
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -88,6 +100,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: '#FFFFFF',
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        color: '#58B1F4',
+      },
     picker: {
         flex: 2,
         height: 40,

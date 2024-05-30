@@ -34,7 +34,7 @@ function AdminLogin({ navigation }) {
         } catch (error) {
             Alert.alert(error.message);
         } finally {
-            setLoading(false); // Set loading to false when login completes or encounters an error
+            setLoading(false);
         }
     };
 

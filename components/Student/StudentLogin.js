@@ -4,38 +4,62 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import LinearGradient from 'react-native-linear-gradient';
 
 function StudentLogin({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const verifyLogin = async () => {
-    try {      
-      await auth().signInWithEmailAndPassword(email, password);
+    const verifyLogin = async () => {
+      
+      try {
+          await auth().signInWithEmailAndPassword(email, password);
+  
+          const uEmail = auth().currentUser.email;
+          console.log(uEmail);
+          const userQuerySnapshot = await firestore().collection("Users")
+              .where("email", "==", uEmail)
+              .get();
+  
+          if (!userQuerySnapshot.empty) {
+              const userDoc = userQuerySnapshot.docs[0];
+              const userRole = userDoc.data().role;
+  
+              if (userRole === "student") {
+                  navigation.navigate('studentDashboard',{uEmail});
+              } else {
+                  Alert.alert("No Such Student Exists");
+              }
+          } else {
+              Alert.alert("No Such Student Exists");
+          }
 
-      const uEmail = auth().currentUser.email;
-      console.log(uEmail);
-      const userQuerySnapshot = await firestore().collection("Users")
-        .where("email", "==", uEmail)
-        .get();
+      //     const userQuerySnapshot = await firestore().collection("Students")
+      //     .where("registrationNumber", "==", email)
+      //     .get();
 
-      if (!userQuerySnapshot.empty) {
-        const userDoc = userQuerySnapshot.docs[0];
-        const userRole = userDoc.data().role;
+      //     if (!userQuerySnapshot.empty) {
+      //       const userDoc = userQuerySnapshot.docs[0];
+      //       const userData = userDoc.data();
+      //       const hashedPassword = userData.password;
+      //       const isPasswordValid = await verifyPassword(plainPassword, hashedPassword);
+      //       if (isPasswordValid) {
+      //               navigation.navigate('studentDashboard');
+      //         } 
+      //       else {
+      //               alert("No Such Student Exists");
+      //             }
+      //       }
+      //         else {
+      //             alert("Invalid Registraion Number");
+      //         }
+          }
+                  
+      catch (error) {
+          Alert.alert(error.message);
+      } finally{
 
-        if (userRole === "student") {
-          navigation.navigate('MainContainer', { uEmail });
-        } else {
-          alert("No Such Student Exists");
-        }
-      } else {
-        alert("No Such Student Exists");
       }
-    } catch (error) {
-      Alert.alert(error.message);
-    }
   };
 
   return (
@@ -61,15 +85,19 @@ function StudentLogin({ navigation }) {
           onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity style={LoginStyles.button} onPress={verifyLogin} disabled={loading}>
-        {loading ? (
-          <ActivityIndicator size="small" color="#ffffff" />
-        ) : (
-          <Text style={LoginStyles.buttonText}>Login</Text>
-        )}
-      </TouchableOpacity>
-      <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
-      <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
+    <View style={LoginStyles.buttonContainer}>
+        <Text style={LoginStyles.forgot} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
+        <LinearGradient colors={['#58B1F4', '#2a73ba']} style={LoginStyles.LoginButton}>
+        <TouchableOpacity onPress={verifyLogin} disabled={loading}>
+                        {loading ? (
+                            <ActivityIndicator size="small" color="#ffffff" />
+                        ) : (
+                            <Text style={LoginStyles.buttonText}>Login</Text>
+                        )}
+                    </TouchableOpacity>
+      </LinearGradient>
+      </View>
+      <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to <Text style = {LoginStyles.linkBold} > Home Page</Text></Text>
     </View>
   );
 }
@@ -113,6 +141,9 @@ const LoginStyles = StyleSheet.create({
     color: 'black',
   },
   button: {
+    padding: 10,
+    borderRadius: 10,
+    width: '30%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
@@ -123,8 +154,15 @@ const LoginStyles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
   },
+  forgot: {
+    marginTop:20,
+    marginBottom: 20,
+    color: '#58B1F4',
+    fontSize: 12,
+  },
   link: {
-    marginTop: 60,
+    marginTop:60,
+    marginBottom: 20,
     color: '#58B1F4',
     fontSize: 12,
   },

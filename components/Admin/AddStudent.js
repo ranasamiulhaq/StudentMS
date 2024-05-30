@@ -1,11 +1,12 @@
     import React, { useState } from 'react';
-    import { View, StyleSheet, TextInput, TouchableOpacity, Alert, Text, ScrollView, Dimensions } from 'react-native';
+    import { View, StyleSheet, TextInput, TouchableOpacity, Alert, Text,ActivityIndicator, ScrollView, Dimensions } from 'react-native';
     import { Picker } from '@react-native-picker/picker';
     import DateTimePicker from '@react-native-community/datetimepicker';
     import auth from '@react-native-firebase/auth';
     import firestore from '@react-native-firebase/firestore';
 
     const AddStudent = ({ navigation }) => {
+        const [loading, setLoading] = useState(false);
         const [registrationNumber, setRegistrationNumber] = useState('');
         const [dateOfAdmission, setDateOfAdmission] = useState(new Date());
         const [showDateOfAdmissionPicker, setShowDateOfAdmissionPicker] = useState(false);
@@ -64,7 +65,7 @@
                 const hashedPassword = await hashPassword(password);
                 await auth().createUserWithEmailAndPassword(email, password);
                 const uEmail = auth().currentUser.email;
-
+                setLoading(true);
                 await firestore().collection('Students').add({
                     registrationNumber: parseInt(registrationNumber),
                     dateOfAdmission: dateOfAdmission,
@@ -93,6 +94,10 @@
             } catch (error) {
                 Alert.alert('Error', error.message);
             }
+            finally {
+                setLoading(false);
+                navigation.goBack();
+            }
         };
 
         const handleDateOfAdmissionChange = (event, selectedDate) => {
@@ -106,10 +111,18 @@
             setShowDateOfBirthPicker(Platform.OS === 'ios');
             setDateOfBirth(currentDate);
         };
+        
+        if(loading){
+            return (
+                <View style={crudStyles.loadingContainer}>
+                  <ActivityIndicator size="large" color="#58B1F4" />
+                  <Text style={crudStyles.loadingText}>Adding Students</Text>
+                </View>
+              )}
 
         return (
            
-
+            
             <ScrollView contentContainerStyle={crudStyles.container}>
 
                 <View style={crudStyles.inputGroup}>
@@ -265,6 +278,16 @@
             paddingHorizontal: 10,
             backgroundColor: '#FFFFFF',
         },
+        loadingContainer: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          loadingText: {
+            marginTop: 10,
+            fontSize: 18,
+            color: '#58B1F4',
+          },
         inputGroup: {
             flexDirection: 'row',
             alignItems: 'center',

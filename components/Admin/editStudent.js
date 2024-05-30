@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity, Text, ScrollView, Alert } from 'react-native';
+import { View, StyleSheet, TextInput,ActivityIndicator, TouchableOpacity, Text, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import firestore from '@react-native-firebase/firestore';
 
 const EditStudent = ({ navigation }) => {
+    const [loading, setLoading] = useState(false);
     const [admissionClass, setAdmissionClass] = useState('');
     const [registrationNumber, setRegistrationNumber] = useState('');
     const [studentDetails, setStudentDetails] = useState(null);
@@ -39,7 +40,7 @@ const EditStudent = ({ navigation }) => {
 
     const handleSaveChanges = async () => {
         if (!studentDetails) return;
-
+        setLoading(true);
         try {
             await firestore().collection('Students').doc(studentDetails.docId).update({
                 ...studentDetails,
@@ -49,6 +50,9 @@ const EditStudent = ({ navigation }) => {
             Alert.alert('Success', 'Student details updated successfully');
         } catch (error) {
             Alert.alert('Error', error.message);
+        }
+        finally {
+            setLoading(false);
         }
 
         navigation.goBack();
@@ -65,6 +69,15 @@ const EditStudent = ({ navigation }) => {
             handleInputChange('dateOfBirth', selectedDate.toISOString());
         }
     };
+
+    if(loading){
+        return (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#58B1F4" />
+              <Text style={styles.loadingText}>Updating Students</Text>
+            </View>
+          )}
+
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -183,6 +196,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: '#FFFFFF',
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        color: '#58B1F4',
+      },
     inputGroup: {
         flexDirection: 'row',
         alignItems: 'center',

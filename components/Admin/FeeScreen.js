@@ -1,5 +1,5 @@
 import React, { useState ,useEffect} from 'react';
-import { View, Text, TextInput, Button, Switch, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, ActivityIndicator , TextInput, Button, Switch, StyleSheet, ScrollView } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import { Alert } from 'react-native';
 
@@ -13,11 +13,13 @@ const FeeScreen = ({route}) => {
   const [paymentDate, setPaymentDate] = useState('');
   const [lateFees, setLateFees] = useState(false);
   const [remarks, setRemarks] = useState('');
+  const [loading, setLoading] = useState(false);
     useEffect(() => {
     const currentDate = new Date().toISOString().split('T')[0]; 
         setPaymentDate(currentDate);
   }, []);
   const handleSave = async () => {
+    setLoading(true);
     try {
       await firestore().collection('FeeStatus').add({
         studentName,
@@ -42,7 +44,19 @@ const FeeScreen = ({route}) => {
     } catch (error) {
       console.error('Error adding record: ', error);
     }
+    finally {
+      setLoading(false);
+  }
   };
+
+  if(loading){
+    return (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#58B1F4" />
+          <Text style={styles.loadingText}>Adding Students</Text>
+        </View>
+      )}
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -111,6 +125,16 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     marginBottom: 8,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 18,
+    color: '#58B1F4',
   },
   input: {
     borderWidth: 1,
