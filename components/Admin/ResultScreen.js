@@ -55,7 +55,6 @@ const ResultScreen = () => {
         const studentsData = studentsSnapshot.docs.map(doc => doc.data());
         console.log('Students data:', studentsData);
 
-        // Fetch marks for the class
         const marksSnapshot = await firestore().collection('Marks')
           .where('classId', '==', selectedClassId)
           .get();
@@ -63,7 +62,6 @@ const ResultScreen = () => {
         const marksData = marksSnapshot.docs.map(doc => doc.data());
         console.log('Marks data:', marksData);
 
-        // Map marks to students
         const studentsWithMarks = studentsData.map(student => {
           const studentMarks = marksData.filter(mark => mark.registrationNumber === String(student.registrationNumber));
           return { ...student, marks: studentMarks };
@@ -96,7 +94,7 @@ const ResultScreen = () => {
         placeholder="Select a class"
         onChangeValue={(value) => {
           console.log('Selected Class:', value);
-          setSelectedClassId(value); // Update the selected class ID
+          setSelectedClassId(value); 
         }}
         style={{ width: 200, marginBottom: 20 }}
       />
