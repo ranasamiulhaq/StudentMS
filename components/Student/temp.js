@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, ActivityIndicator,View, Text, Image } from 'react-native';
+import { StyleSheet, ActivityIndicator, View, Text, Image } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -10,6 +10,8 @@ import FeeStatus from './StudentFeeStatus';
 import Timetable from './Timetable';
 import Syllabus from './Syllabus';
 import Dashboard from './StudentDashborad';
+import StudentLogin from './StudentLogin';
+
 
 const dashboardName = "Dashboard";
 const syllabusName = "Syllabus";
@@ -18,21 +20,9 @@ const marksName = "Marks";
 const feeName = "Fee Status";
 
 
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-function StudentStack() {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator >
-                <Stack.Screen options={{ title: 'StudentMarks' }} name="StudentMarks" component={Marks} />
-                <Stack.Screen options={{ title: 'StudentFeeStatus' }} name="StudentFeeStatus" component={FeeStatus} />
-                <Stack.Screen options={{ title: 'Timetable' }} name="Timetable" component={Timetable} />
-                <Stack.Screen options={{ title: 'Syllabus' }} name="Syllabus" component={Syllabus} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    );
-}
-
 
 
 function MainContainer({ route }) {
@@ -68,9 +58,9 @@ function MainContainer({ route }) {
     if (loading) {
         return (
             <View style={styles.loadingContainer}>
-              <ActivityIndicator size="large" color="#0000ff" />
+                <ActivityIndicator size="large" color="#0000ff" />
             </View>
-          );
+        );
     }
 
     if (!studentData) {
@@ -84,7 +74,7 @@ function MainContainer({ route }) {
     const { registrationNumber: regno, admissionClass: classname } = studentData;
 
     return (
-        <NavigationContainer independent={true}>
+        
             <Tab.Navigator
                 initialRouteName={dashboardName}
                 screenOptions={({ route }) => ({
@@ -112,6 +102,7 @@ function MainContainer({ route }) {
                                 ? require('../../public/icons/feeBlue.png')
                                 : require('../../public/icons/fees.png');
                         }
+                        
 
                         return <Image source={iconName} style={[styles.icon, { tintColor: color, width: size, height: size }]} />;
                     },
@@ -120,14 +111,16 @@ function MainContainer({ route }) {
                     tabBarLabelStyle: styles.tabBarLabelStyle,
                     tabBarStyle: styles.tabBarStyle,
                 })}
-            >                
-                <Tab.Screen options={{headerShown: false}} name={marksName} component={Marks} initialParams={{ regno }} />
-                <Tab.Screen options={{headerShown: false}} name={dashboardName} component={Dashboard} initialParams={{ uEmail }} />
-                <Tab.Screen  name={syllabusName} component={Syllabus} initialParams={{ imageName: `${classname} syllabus.jpg` }} />
-                <Tab.Screen options={{headerShown: false}} name={feeName} component={FeeStatus} initialParams={{ regno }} />
-                <Tab.Screen  name={timetableName} component={Timetable} initialParams={{ imageName: `${classname} timetable.jpg` }} />
+            >
+             
+                <Tab.Screen options={{ headerShown: false }} name={marksName} component={Marks} initialParams={{ regno }} />
+                <Tab.Screen options={{ headerShown: false }} name={dashboardName} component={Dashboard} initialParams={{ uEmail }} />
+                <Tab.Screen name={syllabusName} component={Syllabus} initialParams={{ imageName: `${classname} syllabus.jpg` }} />
+                <Tab.Screen options={{ headerShown: false }} name={feeName} component={FeeStatus} initialParams={{ regno }} />
+                <Tab.Screen name={timetableName} component={Timetable} initialParams={{ imageName: `${classname} timetable.jpg` }} />
+                
             </Tab.Navigator>
-        </NavigationContainer>
+        
     );
 }
 
@@ -152,7 +145,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#123456',
         alignItems: 'center',
         justifyContent: 'center',
-      },
+    },
 });
 
 
