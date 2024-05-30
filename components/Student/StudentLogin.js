@@ -4,38 +4,62 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import LinearGradient from 'react-native-linear-gradient';
 
 function StudentLogin({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const verifyLogin = async () => {
-    try {      
-      await auth().signInWithEmailAndPassword(email, password);
+    const verifyLogin = async () => {
+      
+      try {
+          await auth().signInWithEmailAndPassword(email, password);
+  
+          const uEmail = auth().currentUser.email;
+          console.log(uEmail);
+          const userQuerySnapshot = await firestore().collection("Users")
+              .where("email", "==", uEmail)
+              .get();
+  
+          if (!userQuerySnapshot.empty) {
+              const userDoc = userQuerySnapshot.docs[0];
+              const userRole = userDoc.data().role;
+  
+              if (userRole === "student") {
+                  navigation.navigate('studentDashboard',{uEmail});
+              } else {
+                  Alert.alert("No Such Student Exists");
+              }
+          } else {
+              Alert.alert("No Such Student Exists");
+          }
 
-      const uEmail = auth().currentUser.email;
-      console.log(uEmail);
-      const userQuerySnapshot = await firestore().collection("Users")
-        .where("email", "==", uEmail)
-        .get();
+      //     const userQuerySnapshot = await firestore().collection("Students")
+      //     .where("registrationNumber", "==", email)
+      //     .get();
 
-      if (!userQuerySnapshot.empty) {
-        const userDoc = userQuerySnapshot.docs[0];
-        const userRole = userDoc.data().role;
+      //     if (!userQuerySnapshot.empty) {
+      //       const userDoc = userQuerySnapshot.docs[0];
+      //       const userData = userDoc.data();
+      //       const hashedPassword = userData.password;
+      //       const isPasswordValid = await verifyPassword(plainPassword, hashedPassword);
+      //       if (isPasswordValid) {
+      //               navigation.navigate('studentDashboard');
+      //         } 
+      //       else {
+      //               alert("No Such Student Exists");
+      //             }
+      //       }
+      //         else {
+      //             alert("Invalid Registraion Number");
+      //         }
+          }
+                  
+      catch (error) {
+          Alert.alert(error.message);
+      } finally{
 
-        if (userRole === "student") {
-          navigation.navigate('MainContainer', { uEmail });
-        } else {
-          alert("No Such Student Exists");
-        }
-      } else {
-        alert("No Such Student Exists");
       }
-    } catch (error) {
-      Alert.alert(error.message);
-    }
   };
 
   return (
