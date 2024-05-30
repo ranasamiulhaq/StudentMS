@@ -61,15 +61,19 @@ function StudentLogin({ navigation }) {
           onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity style={LoginStyles.button} onPress={verifyLogin} disabled={loading}>
-        {loading ? (
-          <ActivityIndicator size="small" color="#ffffff" />
-        ) : (
-          <Text style={LoginStyles.buttonText}>Login</Text>
-        )}
-      </TouchableOpacity>
-      <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
-      <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
+    <View style={LoginStyles.buttonContainer}>
+        <Text style={LoginStyles.forgot} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
+        <LinearGradient colors={['#58B1F4', '#2a73ba']} style={LoginStyles.LoginButton}>
+        <TouchableOpacity onPress={verifyLogin} disabled={loading}>
+                        {loading ? (
+                            <ActivityIndicator size="small" color="#ffffff" />
+                        ) : (
+                            <Text style={LoginStyles.buttonText}>Login</Text>
+                        )}
+                    </TouchableOpacity>
+      </LinearGradient>
+      </View>
+      <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to <Text style = {LoginStyles.linkBold} > Home Page</Text></Text>
     </View>
   );
 }
@@ -113,6 +117,9 @@ const LoginStyles = StyleSheet.create({
     color: 'black',
   },
   button: {
+    padding: 10,
+    borderRadius: 10,
+    width: '30%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
@@ -123,8 +130,15 @@ const LoginStyles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
   },
+  forgot: {
+    marginTop:20,
+    marginBottom: 20,
+    color: '#58B1F4',
+    fontSize: 12,
+  },
   link: {
-    marginTop: 60,
+    marginTop:60,
+    marginBottom: 20,
     color: '#58B1F4',
     fontSize: 12,
   },

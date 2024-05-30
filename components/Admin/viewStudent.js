@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TextInput, TouchableOpacity, Text, ScrollView, Alert } from 'react-native';
+import { View, StyleSheet, TextInput,ActivityIndicator, TouchableOpacity, Text, ScrollView, Alert } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import firestore from '@react-native-firebase/firestore';
 
 const ViewStudent = ({ navigation }) => {
+    const [loading, setLoading] = useState(false);
     const [admissionClass, setAdmissionClass] = useState('');
     const [registrationNumber, setRegistrationNumber] = useState('');
     const [studentDetails, setStudentDetails] = useState(null);
     const [studentsList, setStudentsList] = useState([]);
 
     const handleViewStudent = async () => {
+
         try {
+            setLoading(true);
             if (admissionClass && registrationNumber) {
                 const studentQuerySnapshot = await firestore().collection('Students')
                     .where('registrationNumber', '==', parseInt(registrationNumber))
@@ -45,7 +48,19 @@ const ViewStudent = ({ navigation }) => {
         } catch (error) {
             Alert.alert('Error', error.message);
         }
+        finally {
+            setLoading(false);
+        }
     };
+
+    if(loading){
+        return (
+            <View style={styles.loadingContainer}>
+              <ActivityIndicator size="large" color="#58B1F4" />
+              <Text style={styles.loadingText}>Fetching Students</Text>
+            </View>
+          )}
+
 
     return (
         <ScrollView contentContainerStyle={styles.container}>
@@ -121,6 +136,16 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         backgroundColor: '#FFFFFF',
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+      loadingText: {
+        marginTop: 10,
+        fontSize: 18,
+        color: '#58B1F4',
+      },
     backButton:{
         backgroundColor: '#58B1F4',
         borderRadius  : 10,

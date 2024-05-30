@@ -111,11 +111,11 @@ function App() {
         <Stack.Screen options={{ headerShown: false }} name="curdStudents" component={CurdStudents} />
         <Stack.Screen options={{ title: 'Add Student' }} name="addStudents" component={AddStudent} />
         <Stack.Screen options={{ title: 'Edit Student' }} name="editStudents" component={EditStudent} />
-        <Stack.Screen options={{ headerShown: false }} name="FeeUsersScreen" component={FeeUsersScreen} />
-        <Stack.Screen options={{ headerShown: false }} name="FeeScreen" component={FeeScreen} />
+        <Stack.Screen options={{ title: 'Fee Screen' }} name="FeeUsersScreen" component={FeeUsersScreen} />
+        <Stack.Screen options={{ title: 'Fee Screen' }} name="FeeScreen" component={FeeScreen} />
         <Stack.Screen options={{ title: 'Generate Fee' }} name="AdminClassScreen" component={AdminClassScreen} />
-        <Stack.Screen options={{ headerShown: false }} name="crudFee" component={crudFee} />
-        <Stack.Screen options={{ headerShown: false }} name="viewFeeStatusdetail" component={viewFeeStatusdetail} />
+        <Stack.Screen options={{ title: 'Generate Fee' }} name="crudFee" component={crudFee} />
+        <Stack.Screen options={{ title: 'Fee Status Details' }} name="viewFeeStatusdetail" component={viewFeeStatusdetail} />
         <Stack.Screen options={{ title: 'Fee Status' }} name="deletefeeStatus" component={DeleteFeeStatus} />
         <Stack.Screen options={{ headerShown: false }} name="EditFee" component={EditFee} />
         <Stack.Screen options={{ title: 'Upload Time Table' }} name="UploadTimeTable" component={UploadTimeTable} />
