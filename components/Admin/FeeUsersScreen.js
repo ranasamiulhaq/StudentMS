@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View,Image ,Text, FlatList, StyleSheet ,TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -39,7 +39,10 @@ const FeeUsersScreen = ({ route }) => {
     <TouchableOpacity onPress={() => handlePress(item)} style={styles.item}>
       <View style={styles.itemHeader}>
         <Text style={styles.name}>{item.name}</Text>
-        <MaterialCommunityIcons name="chevron-right" size={24} color="#58B1F4" />
+        <Image
+        source={require('../../public/icons/student.png')} // Change the path to your PNG icon
+        style={styles.icon}
+      />
       </View>
       <View style={styles.detailContainer}>
         <Text style={styles.label}>Reg. No: </Text>
@@ -132,6 +135,11 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     alignSelf: 'center',
   },
+  icon: {
+    width: 40, // Adjust width and height as needed
+    height: 40,
+    tintColor: '#58B1F4', // You can change the tint color if desired
+  }
 });
 
 export default FeeUsersScreen;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text,Image ,FlatList, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -35,10 +35,14 @@ const AdminClassScreen = () => {
   const renderClassItem = ({ item }) => (
     <TouchableOpacity onPress={() => handlePress(item)} style={styles.item}>
       <View style={styles.iconContainer}>
-        <Icon name="school" size={24} color="#58B1F4" />
+        {/* <Icon name="school" size={24} color="#58B1F4" /> */}
+        <Image
+        source={require('../../public/icons/class.png')} // Change the path to your PNG icon
+        style={styles.icon}
+      />
       </View>
       <Text style={styles.name}>{item.className}</Text>
-      <Icon name="chevron-right" size={24} color="#58B1F4" />
+      {/* <Icon name="chevron-right" size={24} color="#58B1F4" /> */}
     </TouchableOpacity>
   );
 
@@ -108,7 +112,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
-  },
+  },  
+  icon: {
+    width: 24, // Adjust width and height as needed
+    height: 24,
+    tintColor: '#58B1F4', // You can change the tint color if desired
+  }
 });
 
 export default AdminClassScreen;

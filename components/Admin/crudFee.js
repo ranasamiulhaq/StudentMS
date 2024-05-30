@@ -12,7 +12,7 @@ const CurdStudent = ({navigation}) => {
                 <TouchableOpacity style={Dashboardstyles.dashboardButton} onPress={()=>{navigation.navigate('AdminClassScreen')}}>
                   <Image source={require('../../public/icons/student.png')} style={Dashboardstyles.image} />
                 </TouchableOpacity>
-                <Text style={Dashboardstyles.buttonText}>Edit Fee</Text>
+                <Text style={Dashboardstyles.buttonText}>Add Fee</Text>
             </View>
 
             <View style={Dashboardstyles.IconContainer}>
