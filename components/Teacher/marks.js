@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, FlatList, TextInput, Button, Alert, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, FlatList, TextInput, Alert, TouchableOpacity, ActivityIndicator } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import firestore from '@react-native-firebase/firestore';
 
@@ -13,6 +13,7 @@ function Marks({ route }) {
   const [students, setStudents] = useState([]);
   const [marks, setMarks] = useState({});
   const [editableMarks, setEditableMarks] = useState({});
+  const [loading, setLoading] = useState(false); // Loading state
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -121,6 +122,7 @@ function Marks({ route }) {
   };
 
   const updateMarks = async () => {
+    setLoading(true); // Start loading
     try {
       const batch = firestore().batch();
 
@@ -144,8 +146,11 @@ function Marks({ route }) {
 
       await batch.commit();
       console.log('Marks updated successfully');
+      Alert.alert('Success', 'Marks have been updated successfully.');
     } catch (error) {
       console.error('Error updating marks:', error);
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -190,15 +195,19 @@ function Marks({ route }) {
                 value={String(editableMarks[item.registrationNumber] || '')}
                 onChangeText={(text) => handleMarkChange(item.registrationNumber, text)}
                 keyboardType="numeric"
+                editable={!!selectedSubject} 
               />
             </View>
           )}
         />
       </View>
-      <TouchableOpacity style={styles.updateButton} title="Update Marks" onPress={updateMarks} >
-        <Text style={styles.updateButtonText}>Upload Marks</Text>
+      <TouchableOpacity style={styles.updateButton} onPress={updateMarks} disabled={loading || !selectedSubject}>
+        {loading ? (
+          <ActivityIndicator color="#ffffff" />
+        ) : (
+          <Text style={styles.updateButtonText}>Upload Marks</Text>
+        )}
       </TouchableOpacity>
-
     </View>
   );
 }
