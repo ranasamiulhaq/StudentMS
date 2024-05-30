@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, ActivityIndicator, Text } from 'react-native';
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, getDownloadURL } from 'firebase/storage';
 import firebaseConfig from './firebaseConfig.js'; // Ensure this is the correct path
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 // Initialize Firebase
 initializeApp(firebaseConfig);
@@ -49,17 +50,15 @@ export default function Timetable({ route }) {
     );
   }
 
+  const images = [{ url }];
+
   return (
     <View style={styles.container}>
-      {url ? (
-        <Image
-          style={styles.image}
-          source={{ uri: url }}
-          resizeMode='contain'
-        />
-      ) : (
-        <Text>No image found.</Text>
-      )}
+      <ImageViewer
+        imageUrls={images}
+        enableSwipeDown
+        renderIndicator={() => null} // Optionally, you can hide the indicator
+      />
     </View>
   );
 }
@@ -68,8 +67,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#123456',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   loadingContainer: {
     flex: 1,
@@ -82,9 +79,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#123456',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
   },
 });

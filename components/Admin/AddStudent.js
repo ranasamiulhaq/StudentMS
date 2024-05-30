@@ -17,7 +17,7 @@
         const [caste, setCaste] = useState('');
         const [occupation, setOccupation] = useState('');
         const [residence, setResidence] = useState('');
-        const [admissionClass, setAdmissionClass] = useState('');
+        const [admissionClass, setAdmissionClass] = useState('');        
         const [email, setEmail] = useState('');
         const [password, setPassword] = useState('');
         const [remarks, setRemarks] = useState('');
@@ -78,6 +78,7 @@
                         residence: residence,
                     },
                     admissionClass: admissionClass,
+                    classId: admissionClass,
                     email: uEmail,
                     password: hashedPassword,
                     remarks: remarks

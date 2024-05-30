@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, TextInput, StatusBar, SafeView, TouchableOpacity, Alert, Button, Image, Text, ScrollView } from 'react-native';
+import { View, StyleSheet,ActivityIndicator ,TextInput, StatusBar, SafeView, TouchableOpacity, Alert, Button, Image, Text, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import auth from '@react-native-firebase/auth';
@@ -43,8 +43,8 @@ const StudentDashboard = ({ navigation, route }) => {
 
   if (!studentData) {
     return (
-      <View>
-        <Text>Loading...</Text>
+      <View style={Dashboardstyles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
       </View>
     );
   }
@@ -141,6 +141,12 @@ const Dashboardstyles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     marginLeft: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    backgroundColor: '#123456',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 

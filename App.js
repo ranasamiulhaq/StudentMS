@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Image, Text, Easing } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator} from '@react-navigation/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FeeUsersScreen from './components/Admin/FeeUsersScreen';
 import FeeScreen from './components/Admin/FeeScreen';
 import LinearGradient from 'react-native-linear-gradient'; // Import LinearGradient
@@ -36,13 +36,15 @@ import AssignTeacher from './components/Admin/AssignTeacher';
 import Reports from './components/Admin/Reports';
 import AgeReport from './components/Admin/AgeReport';
 import ClassAgeReport from './components/Admin/ClassAgeReport';
+import MainContainer from './components/Student/temp'; 
+import UploadStudents from './utils/UploadStudents'
 
 const StartingPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Image source={require('./public/img/Logo.png')} style={styles.logo} />
       <Text style={styles.the}>THE<Text style={styles.school}> SCHOOL</Text></Text>
-      
+
       <View style={styles.buttonsContainer}>
         <LinearGradient colors={['#79bae6', '#468ec5']} style={styles.loginButton}>
           <TouchableOpacity onPress={() => navigation.navigate('teacherLogin')}>
@@ -60,10 +62,10 @@ const StartingPage = ({ navigation }) => {
       </View>
 
       <LinearGradient colors={['#468ec5', '#79bae6']} style={styles.AdminButton}>
-          <TouchableOpacity onPress={() => navigation.navigate('adminLogin')} style={styles.admin}>
-              <Text style={styles.buttonText}>Admin</Text>
-            </TouchableOpacity>
-        </LinearGradient>
+        <TouchableOpacity onPress={() => navigation.navigate('adminLogin')} style={styles.admin}>
+          <Text style={styles.buttonText}>Admin</Text>
+        </TouchableOpacity>
+      </LinearGradient>
     </View>
   );
 };
@@ -93,44 +95,46 @@ const screenOptions = {
 
 const Stack = createNativeStackNavigator();
 function App() {
+  <UploadStudents/>
   return (
     <NavigationContainer>
       <Stack.Navigator>
-      <Stack.Screen options={{headerShown: false}} name="Land" component={StartingPage} />
-      <Stack.Screen options={{headerShown: false}} name="ResultScreen" component={ResultScreen} />
-        <Stack.Screen options={{headerShown: false}} name="adminDashboard" component={AdminDashboard} />
-        
-        <Stack.Screen options={{headerShown: false}} name="studentLogin" component={StudentLogin} />
-        <Stack.Screen options={{headerShown: false}} name="teacherLogin" component={TeacherLogin} />
-        <Stack.Screen options={{headerShown: false}} name="adminLogin" component={AdminLogin} />
-        <Stack.Screen options={{headerShown: false}} name="studentDashboard" component={StudentDashboard} />
-        <Stack.Screen options={{headerShown: false}} name="teacherDashboard" component={TeacherDashboard} />
-        <Stack.Screen options={{headerShown: false}} name="curdStudents" component={CurdStudents} />
+        <Stack.Screen options={{ headerShown: false }} name="Land" component={StartingPage} />
+        <Stack.Screen options={{ headerShown: false }} name="ResultScreen" component={ResultScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="adminDashboard" component={AdminDashboard} />
+
+        <Stack.Screen options={{ headerShown: false }} name="studentLogin" component={StudentLogin} />
+        <Stack.Screen options={{ headerShown: false }} name="teacherLogin" component={TeacherLogin} />
+        <Stack.Screen options={{ headerShown: false }} name="adminLogin" component={AdminLogin} />
+        <Stack.Screen options={{ headerShown: false }} name="studentDashboard" component={StudentDashboard} />
+        <Stack.Screen options={{ headerShown: false }} name="teacherDashboard" component={TeacherDashboard} />
+        <Stack.Screen options={{ headerShown: false }} name="curdStudents" component={CurdStudents} />
         <Stack.Screen options={{ title: 'Add Student' }} name="addStudents" component={AddStudent} />
         <Stack.Screen options={{ title: 'Edit Student' }} name="editStudents" component={EditStudent} />
-        <Stack.Screen options={{headerShown: false}} name="FeeUsersScreen" component={FeeUsersScreen} />
-        <Stack.Screen options={{headerShown: false}} name="FeeScreen" component={FeeScreen} />
-        <Stack.Screen options={{title: 'Generate Fee'}} name="AdminClassScreen" component={AdminClassScreen} />     
-        <Stack.Screen options={{headerShown: false}} name="crudFee" component={crudFee} /> 
-        <Stack.Screen options={{headerShown: false}} name="viewFeeStatusdetail" component={viewFeeStatusdetail} /> 
-        <Stack.Screen options={{title: 'Fee Status'}} name="deletefeeStatus" component={DeleteFeeStatus} /> 
-        <Stack.Screen options={{headerShown: false}} name="EditFee" component={EditFee} />  
-        <Stack.Screen options={{title: 'Upload Time Table'}} name="UploadTimeTable" component={UploadTimeTable} /> 
-        <Stack.Screen options={{title: 'Upload Syllabus'}} name="UploadSyllabus" component={UploadSyllabus} />  
-        <Stack.Screen options={{ title: 'Delete Student' }}name="deleteStudents" component={DeleteStudent} />
+        <Stack.Screen options={{ headerShown: false }} name="FeeUsersScreen" component={FeeUsersScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="FeeScreen" component={FeeScreen} />
+        <Stack.Screen options={{ title: 'Generate Fee' }} name="AdminClassScreen" component={AdminClassScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="crudFee" component={crudFee} />
+        <Stack.Screen options={{ headerShown: false }} name="viewFeeStatusdetail" component={viewFeeStatusdetail} />
+        <Stack.Screen options={{ title: 'Fee Status' }} name="deletefeeStatus" component={DeleteFeeStatus} />
+        <Stack.Screen options={{ headerShown: false }} name="EditFee" component={EditFee} />
+        <Stack.Screen options={{ title: 'Upload Time Table' }} name="UploadTimeTable" component={UploadTimeTable} />
+        <Stack.Screen options={{ title: 'Upload Syllabus' }} name="UploadSyllabus" component={UploadSyllabus} />
+        <Stack.Screen options={{ title: 'Delete Student' }} name="deleteStudents" component={DeleteStudent} />
         <Stack.Screen options={{ title: 'View Student' }} name="viewStudents" component={ViewStudent} />
-        <Stack.Screen options={{title: 'Marks'}} name="Marks" component={Marks} />
-        <Stack.Screen options={{title: 'StudentMarks'}} name="StudentMarks" component={StudentMarks} />
-        <Stack.Screen options={{title:'StudentFeeStatus'}} name="StudentFeeStatus" component={StudentFeeStatus} />
-        <Stack.Screen options={{title:'Timetable'}} name="Timetable" component={Timetable} />
-        <Stack.Screen options={{title:'Syllabus'}} name="Syllabus" component={Syllabus} />
-        <Stack.Screen options={{title:'Teachers'}} name="TeacherList" component={TeacherList} />
-        <Stack.Screen options={{headerShown: false}} name="TeacherScreen" component={TeacherScreen} />
-        <Stack.Screen options={{headerShown: false}} name="ReportScreen" component={Reports} />
-        <Stack.Screen options={{title:'Assign Class'}} name="AssignTeacher" component={AssignTeacher} />
-<Stack.Screen options={{title:'Result Report'}} name="ResultReport" component={ResultScreen} />
-      <Stack.Screen options={{title:'Age Report'}} name="AgeReport" component={AgeReport} />
-        <Stack.Screen options={{title:'Class Age Report'}} name="ClassAgeReport" component={ClassAgeReport} />
+        <Stack.Screen options={{ title: 'Marks' }} name="Marks" component={Marks} />
+        <Stack.Screen options={{ title: 'StudentMarks' }} name="StudentMarks" component={StudentMarks} />
+        <Stack.Screen options={{ title: 'StudentFeeStatus' }} name="StudentFeeStatus" component={StudentFeeStatus} />
+        <Stack.Screen options={{ title: 'Timetable' }} name="Timetable" component={Timetable} />
+        <Stack.Screen options={{ title: 'Syllabus' }} name="Syllabus" component={Syllabus} />
+        <Stack.Screen options={{ title: 'Teachers' }} name="TeacherList" component={TeacherList} />
+        <Stack.Screen options={{ headerShown: false }} name="TeacherScreen" component={TeacherScreen} />
+        <Stack.Screen options={{ headerShown: false }} name="ReportScreen" component={Reports} />
+        <Stack.Screen options={{ title: 'Assign Class' }} name="AssignTeacher" component={AssignTeacher} />
+        <Stack.Screen options={{ title: 'Result Report' }} name="ResultReport" component={ResultScreen} />
+        <Stack.Screen options={{ title: 'Age Report' }} name="AgeReport" component={AgeReport} />
+        <Stack.Screen options={{ title: 'Class Age Report' }} name="ClassAgeReport" component={ClassAgeReport} />
+        <Stack.Screen options={{ headerShown: false, title: 'Student Portal' }} name='MainContainer' component={MainContainer} />
       </Stack.Navigator>
     </NavigationContainer>
   );
