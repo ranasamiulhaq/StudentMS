@@ -12,6 +12,10 @@ function AdminLogin({ navigation }) {
     const verifyLogin = async () => {
         setLoading(true); // Set loading to true when login starts
         try {
+            if (password.length == 0 || email.length == 0) {
+                Alert.alert("Please fill all the fields")
+              }
+else{
             await auth().signInWithEmailAndPassword(email, password);
 
             const uEmail = auth().currentUser.email;
@@ -31,7 +35,7 @@ function AdminLogin({ navigation }) {
             } else {
                 Alert.alert("Login Error");
             }
-        } catch (error) {
+        }} catch (error) {
             Alert.alert(error.message);
         } finally {
             setLoading(false);

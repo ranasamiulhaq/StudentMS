@@ -78,7 +78,7 @@ const StudentDashboard = ({ navigation, route }) => {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity onPress={() => navigation.replace('studentLogin')} style={styles.logoutButton}>
+      <TouchableOpacity onPress={() => navigation.navigate('studentLogin')} style={styles.logoutButton}>
         <Text style={styles.logoutButtonText}>LOGOUT</Text>
       </TouchableOpacity>
     </View>
