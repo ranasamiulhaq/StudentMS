@@ -12,25 +12,30 @@ function TeacherLogin({ navigation }) {
     const verifyLogin = async () => {
         setLoading(true);
         try {
-            await auth().signInWithEmailAndPassword(email, password);
-            const uEmail = auth().currentUser.email;
-            const userQuerySnapshot = await firestore().collection("Users")
-                .where("email", "==", uEmail)
-                .get();
-
-            if (!userQuerySnapshot.empty) {
-                const userDoc = userQuerySnapshot.docs[0];
-                const userRole = userDoc.data().role;
-
-                if (userRole === "teacher") {
-                    navigation.navigate('teacherDashboard', { email: uEmail });
-                } else {
-                    Alert.alert("No Such Teacher Exists");
-                }
-            } else {
-                Alert.alert("Login Error");
+            if (password.length == 0 || email.length == 0) {
+                Alert.alert("Please fill all the fields")
             }
+            else {
+                await auth().signInWithEmailAndPassword(email, password);
+                const uEmail = auth().currentUser.email;
+                const userQuerySnapshot = await firestore().collection("Users")
+                    .where("email", "==", uEmail)
+                    .get();
 
+                if (!userQuerySnapshot.empty) {
+                    const userDoc = userQuerySnapshot.docs[0];
+                    const userRole = userDoc.data().role;
+
+                    if (userRole === "teacher") {
+                        navigation.navigate('teacherDashboard', { email: uEmail });
+                    } else {
+                        Alert.alert("No Such Teacher Exists");
+                    }
+                } else {
+                    Alert.alert("Login Error");
+                }
+
+            }
         } catch (error) {
             Alert.alert(error.message);
         } finally {

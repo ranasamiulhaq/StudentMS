@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ActivityIndicator, TextInput, StatusBar, TouchableOpacity, Alert, Button, Image, Text, ScrollView } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LinearGradient from 'react-native-linear-gradient';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
-import LinearGradient from 'react-native-linear-gradient';
+
 
 function StudentLogin({ navigation }) {
   const [email, setEmail] = useState('');
@@ -12,28 +13,38 @@ function StudentLogin({ navigation }) {
   const [loading, setLoading] = useState(false);
 
   const verifyLogin = async () => {
+    setLoading(true); // Set loading to true when login starts
     try {
-      await auth().signInWithEmailAndPassword(email, password);
-      const uEmail = auth().currentUser.email;
-      console.log(uEmail);
-      const userQuerySnapshot = await firestore().collection("Users")
-        .where("email", "==", uEmail)
-        .get();
+      if (password.length == 0 || email.length == 0) {
+        Alert.alert("Please fill all the fields")
+      }
+      else {
 
-      if (!userQuerySnapshot.empty) {
-        const userDoc = userQuerySnapshot.docs[0];
-        const userRole = userDoc.data().role;
 
-        if (userRole === "student") {
-          navigation.navigate('MainContainer', { uEmail });
+        await auth().signInWithEmailAndPassword(email, password);
+        const uEmail = auth().currentUser.email;
+        console.log(uEmail);
+        const userQuerySnapshot = await firestore().collection("Users")
+          .where("email", "==", uEmail)
+          .get();
+
+        if (!userQuerySnapshot.empty) {
+          const userDoc = userQuerySnapshot.docs[0];
+          const userRole = userDoc.data().role;
+
+          if (userRole === "student") {
+            navigation.navigate('MainContainer', { uEmail });
+          } else {
+            alert("No Such Student Exists");
+          }
         } else {
           alert("No Such Student Exists");
         }
-      } else {
-        alert("No Such Student Exists");
       }
     } catch (error) {
       Alert.alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -45,7 +56,7 @@ function StudentLogin({ navigation }) {
         <Image source={require('../../public/icons/email.png')} style={LoginStyles.icon} />
         <TextInput
           style={LoginStyles.input}
-          placeholder="Registration"
+          placeholder="Email"
           value={email}
           onChangeText={setEmail}
         />
@@ -60,15 +71,23 @@ function StudentLogin({ navigation }) {
           onChangeText={setPassword}
         />
       </View>
-      <TouchableOpacity style={LoginStyles.button} onPress={verifyLogin} disabled={loading}>
-        {loading ? (
-          <ActivityIndicator size="small" color="#ffffff" />
-        ) : (
-          <Text style={LoginStyles.buttonText}>Login</Text>
-        )}
-      </TouchableOpacity>
-      <Text style={LoginStyles.link} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
-      <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to Home Page</Text>
+
+      <View style={LoginStyles.buttonContainer}>
+        <Text style={LoginStyles.forget} onPress={() => { /* Handle Forgot Password */ }}>Forgot Password</Text>
+        <LinearGradient colors={['#58B1F4', '#2a73ba']} style={LoginStyles.LoginButton}>
+          <TouchableOpacity onPress={verifyLogin} disabled={loading}>
+            {loading ? (
+              <ActivityIndicator size="small" color="#ffffff" />
+            ) : (
+              <Text style={LoginStyles.buttonText}>Login</Text>
+            )}
+          </TouchableOpacity>
+        </LinearGradient>
+      </View>
+      <View style={LoginStyles.linkContainer}>
+        <Text style={LoginStyles.link} onPress={() => navigation.navigate('Land')}>Back to</Text>
+        <Text style={LoginStyles.linkBold} onPress={() => navigation.navigate('Land')}> Home Page</Text>
+      </View>
     </View>
   );
 }
@@ -109,24 +128,49 @@ const LoginStyles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    color: 'black',
   },
   button: {
-    backgroundColor: '#58B1F4',
-    padding: 15,
-    borderRadius: 10,
-    width: '80%',
-    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
   },
   buttonText: {
     color: '#fff',
     fontSize: 18,
+    alignSelf: 'center',
+    justifyContent: 'center',
+  },
+  forget: {
+    color: '#58B1F4',
+    fontSize: 12,
   },
   link: {
     marginTop: 60,
     color: '#58B1F4',
     fontSize: 12,
   },
+  linkBold: {
+    marginTop: 60,
+    color: '#58B1F4',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  buttonContainer: {
+    width: '80%',
+    alignItems: 'flex-end',
+  },
+
+  LoginButton: {
+    marginTop: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40%',
+    borderRadius: 10,
+    height: 40,
+  },
+  linkContainer: {
+    flexDirection: 'row'
+  }
 });
 
 export default StudentLogin;
