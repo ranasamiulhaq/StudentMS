@@ -5,19 +5,19 @@ This project is developed as a part of the "Mobile Application Development" cour
 # Project Members and Contributions
 ## Rana Sami Ul Haq
 - *Registration Number:* FA21-BCS-079
-- *Contribution : Admin Functionalities
+- *Contribution* : Admin Functionalities
   
 ## Zain Ahmed
 - *Registration Number:* FA21-BCS-074
-- *Contribution : Admin Functionalities
+- *Contribution* : Admin Functionalities
   
 ## Usman Leghari
 - *Registration Number:* FA21-BCS-071
-- *Contribution : Student Functionalities
+- *Contribution *: Student Functionalities
 
 ## Rafay Siddiqui
 - *Registration Number:* FA21-BCS-062
-- *Contribution : Teacher Functionalities
+- *Contribution* : Teacher Functionalities
 
 # Improvements Suggested
 - *Activicity Indicators* 
