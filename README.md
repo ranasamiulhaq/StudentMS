@@ -3,11 +3,25 @@
 This project is developed as a part of the "Mobile Application Development" course for the CS Program. The aim is to create a comprehensive School Management System using React Native. The application is designed to manage the functionalities for three main actors: Students, Teachers, and Admins, covering various aspects such as class management, fee status, timetable, and examination results.
 
 # Project Members and Contributions
-## Rana Sami Ul Haq: Admin functionalities
-## Zain Ahmed: Admin functionalities
-## Usman Leghari: Student functionalities
-## Rafay Siddique: Teacher functionalities
+## Rana Sami Ul Haq
+- *Registration Number:* FA21-BCS-079
+- *Contribution : Admin Functionalities
+  
+## Zain Ahmed
+- *Registration Number:* FA21-BCS-074
+- *Contribution : Admin Functionalities
+  
+## Usman Leghari
+- *Registration Number:* FA21-BCS-071
+- *Contribution : Student Functionalities
 
+## Rafay Siddiqui
+- *Registration Number:* FA21-BCS-062
+- *Contribution : Teacher Functionalities
+
+# Improvements Suggested
+- *Activicity Indicators* 
+- *Adding Checks*
 
 # Improvements and Fixes
 
