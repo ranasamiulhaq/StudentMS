@@ -13,7 +13,8 @@ function Marks({ route }) {
   const [students, setStudents] = useState([]);
   const [marks, setMarks] = useState({});
   const [editableMarks, setEditableMarks] = useState({});
-  const [loading, setLoading] = useState(false); // Loading state
+  const [loading, setLoading] = useState(false);
+  const [totalMarks, setTotalMarks] = useState(0);
 
   useEffect(() => {
     const fetchSubjects = async () => {
@@ -29,6 +30,12 @@ function Marks({ route }) {
           console.log('Class subjects:', classSubjects);
           setSubjects(classSubjects);
           setItems(classSubjects.map(subject => ({ label: subject, value: subject })));
+          if(term === 'first' || term === 'mid') {
+            setTotalMarks(25);
+          }
+          else if(term === 'final') {
+            setTotalMarks(50);
+          }
         } else {
           console.log('No class document found for class ID:', classId);
         }
@@ -42,6 +49,7 @@ function Marks({ route }) {
 
   useEffect(() => {
     const fetchStudents = async () => {
+      setLoading(true);
       try {
         console.log('Fetching students for class:', classId);
         const studentsRef = await firestore().collection('Students')
@@ -61,6 +69,8 @@ function Marks({ route }) {
         setStudents(studentsData);
       } catch (error) {
         console.error('Error fetching students:', error);
+      } finally {
+        setLoading(false);
       }
     };
   
@@ -70,7 +80,7 @@ function Marks({ route }) {
   useEffect(() => {
     const fetchMarks = async () => {
       if (!selectedSubject) return;
-
+      setLoading(true);
       try {
         console.log('Fetching marks for subject:', selectedSubject, 'term:', term, 'class:', classId);
         const marksRef = await firestore().collection('Marks')
@@ -90,6 +100,8 @@ function Marks({ route }) {
         setEditableMarks(marksData); 
       } catch (error) {
         console.error('Error fetching marks:', error);
+      } finally{
+        setLoading(false);
       }
     };
 
@@ -122,7 +134,7 @@ function Marks({ route }) {
   };
 
   const updateMarks = async () => {
-    setLoading(true); // Start loading
+    setLoading(true); 
     try {
       const batch = firestore().batch();
 
@@ -174,6 +186,7 @@ function Marks({ route }) {
       </View>
 
       <View style={styles.tableContainer}>
+        <Text style={styles.tableHeading}>Total Marks: {totalMarks}</Text>
         <Text style={styles.tableHeading}>Students in Class</Text>
         <View style={styles.headerRow}>
           <Text style={[styles.headerText, styles.cell, styles.shrink]}>Reg No</Text>

@@ -9,7 +9,7 @@ import ImageViewer from 'react-native-image-zoom-viewer';
 initializeApp(firebaseConfig);
 
 export default function Timetable({ route }) {
-  const { imageName } = route.params; // Assuming you are passing imageName via route params
+  const imageName  ="TimeTable.jpg" ; // Assuming you are passing imageName via route params
   const [url, setUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
